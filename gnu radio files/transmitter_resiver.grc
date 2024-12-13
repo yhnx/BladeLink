@@ -747,7 +747,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: /home/praveen/Desktop/out.txt
+    file: /home/praveen/Documents/git/CDP/source_files/out.txt
     type: byte
     unbuffered: 'False'
     vlen: '1'
@@ -765,7 +765,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/praveen/Desktop/project/files/text.txt
+    file: /home/praveen/Documents/git/CDP/source_files/text.txt
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
