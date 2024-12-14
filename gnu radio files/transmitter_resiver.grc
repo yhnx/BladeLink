@@ -470,7 +470,7 @@ blocks:
     bus_structure: null
     coordinate: [1240, 1732.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: samp_rate
   id: variable
   parameters:
@@ -596,7 +596,7 @@ blocks:
     bus_structure: null
     coordinate: [872, 1740.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: txgain
   id: variable_qtgui_range
   parameters:
@@ -617,7 +617,7 @@ blocks:
     bus_structure: null
     coordinate: [944, 1676.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: variable_adaptive_algorithm_0
   id: variable_adaptive_algorithm
   parameters:
@@ -747,7 +747,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: /home/praveen/Documents/git/CDP/source_files/out.ts
+    file: /home/praveen/Documents/git/CDP/source_files/out.txt
     type: byte
     unbuffered: 'False'
     vlen: '1'
@@ -765,7 +765,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/praveen/Desktop/project/files/minimovie.ts
+    file: /home/praveen/Documents/git/CDP/source_files/text.txt
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -797,7 +797,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1344, 836.0]
+    coordinate: [1376, 828.0]
     rotation: 0
     state: enabled
 - name: blocks_repack_bits_bb_0_0
@@ -899,7 +899,7 @@ blocks:
     bus_structure: null
     coordinate: [912, 1992.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_throttle2_0_0
   id: blocks_throttle2
   parameters:
@@ -994,7 +994,7 @@ blocks:
     bus_structure: null
     coordinate: [1184, 1964.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: controls
   id: qtgui_tab_widget
   parameters:
@@ -1220,41 +1220,6 @@ blocks:
     coordinate: [1584, 2112.0]
     rotation: 0
     state: enabled
-- name: epy_block_0
-  id: epy_block
-  parameters:
-    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
-      \ GRC will instantiate the first class it finds\nto get ports and parameters\
-      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
-      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
-      from gnuradio import gr\n\n\nclass blk(gr.sync_block):  # other base classes\
-      \ are basic_block, decim_block, interp_block\n    \"\"\"Embedded Python Block\
-      \ example - a simple multiply const\"\"\"\n\n    def __init__(self, example_param=1.0):\
-      \  # only default arguments here\n        \"\"\"arguments to this function show\
-      \ up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n         \
-      \   self,\n            name='Embedded Python Block',   # will show up in GRC\n\
-      \            in_sig=[np.complex64],\n            out_sig=[np.complex64]\n  \
-      \      )\n        # if an attribute with the same name as a parameter is found,\n\
-      \        # a callback is registered (properties work, too).\n        self.example_param\
-      \ = example_param\n\n    def work(self, input_items, output_items):\n      \
-      \  \"\"\"example: multiply with constant\"\"\"\n        output_items[0][:] =\
-      \ input_items[0] * self.example_param\n        return len(output_items[0])\n"
-    affinity: ''
-    alias: ''
-    comment: ''
-    example_param: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-  states:
-    _io_cache: ('Embedded Python Block', 'blk', [('example_param', '1.0')], [('0',
-      'complex', 1)], [('0', 'complex', 1)], 'Embedded Python Block example - a simple
-      multiply const', ['example_param'])
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [824, 548.0]
-    rotation: 0
-    state: disabled
 - name: fec_extended_tagged_decoder_2
   id: fec_extended_tagged_decoder
   parameters:
@@ -1796,7 +1761,7 @@ blocks:
     bus_structure: null
     coordinate: [864, 1816.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: soapy_bladerf_source_0
   id: soapy_bladerf_source
   parameters:
@@ -1818,7 +1783,7 @@ blocks:
     bus_structure: null
     coordinate: [1240, 1776.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: virtual_sink_0_0
   id: virtual_sink
   parameters:

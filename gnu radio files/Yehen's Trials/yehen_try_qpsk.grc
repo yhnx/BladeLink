@@ -734,7 +734,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: /home/yhnx/CDP/recieved/rec.png
+    file: /home/praveen/Desktop/temp.png
     type: byte
     unbuffered: 'False'
     vlen: '1'
@@ -752,7 +752,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/yhnx/CDP/recieved/bunny.png
+    file: /home/praveen/Desktop/project/files/bunny.png
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -886,7 +886,7 @@ blocks:
     bus_structure: null
     coordinate: [592, 564.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_throttle2_0_0
   id: blocks_throttle2
   parameters:
@@ -992,7 +992,7 @@ blocks:
     bus_structure: null
     coordinate: [808, 532.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: controls
   id: qtgui_tab_widget
   parameters:
@@ -1479,7 +1479,7 @@ blocks:
     bus_structure: null
     coordinate: [600, 420.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_freq_sink_x_1_0
   id: qtgui_freq_sink_x
   parameters:
@@ -1560,7 +1560,7 @@ blocks:
     bus_structure: null
     coordinate: [832, 420.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0_0_0
   id: qtgui_time_sink_x
   parameters:
@@ -1925,7 +1925,7 @@ blocks:
     bus_structure: null
     coordinate: [608, 328.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: soapy_bladerf_source_0
   id: soapy_bladerf_source
   parameters:
@@ -1947,7 +1947,7 @@ blocks:
     bus_structure: null
     coordinate: [824, 332.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: virtual_sink_0_0
   id: virtual_sink
   parameters:
