@@ -1,45 +1,26 @@
-# from Crypto.Cipher import AES
+import sys
 
 
 
-
-def add_preamble():
+def add_preamble(file,type):
         # Example binary string
     binarypreamble = b'11000110101100111111010110101000011010110011111000110101100'
-    file_path =input()
+    file_path =file
     with open(file_path, 'rb') as file:
         plaintext = file.read()
     preamble = binarypreamble * 300
     detect_sequence = b'sts'  # Sequence to detect preamble
     
-    with open('/home/praveen/Desktop/tx.tmp', 'wb') as output_file:
-        output_file.write(preamble + detect_sequence + plaintext + detect_sequence + preamble)
+    with open('./tx.tmp', 'wb') as output_file:
+        output_file.write(preamble + detect_sequence + plaintext + detect_sequence+binarypreamble +type+ preamble)
 
 
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python script_name.py <path_to_python_file>,type" )
+        sys.exit(1)
 
-
-# #Encryption
-# def pad(data):
-#     # Padding the data to be a multiple of 16 bytes
-#     return data + b"\0" * (AES.block_size - len(data) % AES.block_size)
-
-# def encrypt_file(file_path, key):
-#     global ciphertext
-    
-#     plaintext = pad(plaintext)
-#     cipher = AES.new(key, AES.MODE_ECB)  
-#     ciphertext = cipher.encrypt(plaintext)
-
-  
-
-
-
-# # Encryption details
-
-# predefined_key = b'Hello_IamMihiran'
-
-# # Encrypt the file
-# encrypt_file(file_path, predefined_key)
-
-#Adds the preamble
-add_preamble()
+    file = sys.argv[1]
+    type = sys.argv[1]
+    add_preamble(file,type)
+    print('file created')
