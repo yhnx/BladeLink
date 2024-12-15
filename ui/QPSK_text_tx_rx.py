@@ -846,4 +846,5 @@ def main(top_block_cls=QPSK_text_tx_rx, options=None):
     qapp.exec_()
 
 if __name__ == '__main__':
+    add_preamble();
     main()
