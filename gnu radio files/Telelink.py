@@ -5,7 +5,10 @@
 # SPDX-License-Identifier: GPL-3.0
 #
 # GNU Radio Python Flow Graph
-# Title: QPSK_text_tx_rxgrc
+# Title: Telelink_cdp
+# Author: Telelink
+# Copyright: Telelink
+# Description: cdp project
 # GNU Radio version: 3.10.9.2
 
 from PyQt5 import Qt
@@ -27,18 +30,15 @@ from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
 from gnuradio import soapy
 import sip
-import os
-
-input_file = os.environ['INPUT_FILE'] # Define input file path
-output_file = os.environ['OUTPUT_FILE']  # Define output file path
 
 
-class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
+
+class Telelink(gr.top_block, Qt.QWidget):
 
     def __init__(self, MTU=1500):
-        gr.top_block.__init__(self, "QPSK_text_tx_rxgrc", catch_exceptions=True)
+        gr.top_block.__init__(self, "Telelink_cdp", catch_exceptions=True)
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("QPSK_text_tx_rxgrc")
+        self.setWindowTitle("Telelink_cdp")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -56,7 +56,7 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "QPSK_text_tx_rx")
+        self.settings = Qt.QSettings("GNU Radio", "Telelink")
 
         try:
             geometry = self.settings.value("geometry")
@@ -511,9 +511,10 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.blocks_repack_bits_bb_0_0_0 = blocks.repack_bits_bb(1, 8, 'packet_len', False, gr.GR_MSB_FIRST)
         self.blocks_repack_bits_bb_0_0 = blocks.repack_bits_bb(8, 1, 'packet_len', False, gr.GR_MSB_FIRST)
         self.blocks_repack_bits_bb_0 = blocks.repack_bits_bb(1, 8, '', True, gr.GR_MSB_FIRST)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, input_file, False, 0, 0)
+        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(0.8)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, './tx.tmp', False, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, output_file, False)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, './rx.tmp', False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_delay_0 = blocks.delay(gr.sizeof_float*1, delay)
         self.blocks_char_to_float_1_1 = blocks.char_to_float(1, 1)
@@ -531,6 +532,7 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_char_to_float_1_1, 0), (self.fec_extended_tagged_decoder_2, 0))
         self.connect((self.blocks_delay_0, 0), (self.qtgui_time_sink_x_0_0, 1))
         self.connect((self.blocks_file_source_0, 0), (self.blocks_throttle2_0_0, 0))
+        self.connect((self.blocks_multiply_const_vxx_0, 0), (self.soapy_bladerf_sink_0, 0))
         self.connect((self.blocks_repack_bits_bb_0, 0), (self.blocks_file_sink_0, 0))
         self.connect((self.blocks_repack_bits_bb_0_0, 0), (self.fec_extended_tagged_encoder_0_1, 0))
         self.connect((self.blocks_repack_bits_bb_0_0_0, 0), (self.blocks_tagged_stream_mux_0, 1))
@@ -545,8 +547,8 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_unpack_k_bits_bb_0_0, 0), (self.blocks_char_to_float_0_0_0, 0))
         self.connect((self.digital_constellation_decoder_cb_0, 0), (self.blocks_char_to_float_0, 0))
         self.connect((self.digital_constellation_decoder_cb_0, 0), (self.digital_diff_decoder_bb_0, 0))
+        self.connect((self.digital_constellation_modulator_0, 0), (self.blocks_multiply_const_vxx_0, 0))
         self.connect((self.digital_constellation_modulator_0, 0), (self.qtgui_freq_sink_x_0, 0))
-        self.connect((self.digital_constellation_modulator_0, 0), (self.soapy_bladerf_sink_0, 0))
         self.connect((self.digital_correlate_access_code_xx_ts_0, 0), (self.digital_map_bb_0_0, 0))
         self.connect((self.digital_costas_loop_cc_0, 0), (self.digital_constellation_decoder_cb_0, 0))
         self.connect((self.digital_costas_loop_cc_0, 0), (self.qtgui_const_sink_x_0, 0))
@@ -563,7 +565,7 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
 
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "QPSK_text_tx_rx")
+        self.settings = Qt.QSettings("GNU Radio", "Telelink")
         self.settings.setValue("geometry", self.saveGeometry())
         self.stop()
         self.wait()
@@ -796,14 +798,15 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
 
 
 def argument_parser():
-    parser = ArgumentParser()
+    description = 'cdp project'
+    parser = ArgumentParser(description=description)
     parser.add_argument(
         "--MTU", dest="MTU", type=intx, default=1500,
         help="Set MTU [default=%(default)r]")
     return parser
 
 
-def main(top_block_cls=QPSK_text_tx_rx, options=None):
+def main(top_block_cls=Telelink, options=None):
     if options is None:
         options = argument_parser().parse_args()
 

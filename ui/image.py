@@ -84,7 +84,7 @@ class ImageFrame:
             try:
                 os.environ['INPUT_FILE'] = self.selected_image_path
                 os.environ['OUTPUT_FILE'] = "./output.tmp"  # Define output file path
-                
+                subprocess.run(["python3", "tx.py",self.selected_image_path,"jpeg"], check=True)
                 subprocess.run(["python3", "Telelink.py"], check=True)
                 messagebox.showinfo("Execution Complete", "QPSK script executed successfully.")
             except subprocess.CalledProcessError as e:
