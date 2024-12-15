@@ -30,8 +30,23 @@ from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
 from gnuradio import soapy
 import sip
+import os
 
+input_file = os.environ['INPUT_FILE'] # Define input file path
+output_file = os.environ['OUTPUT_FILE']  # Define output file path
+tmp_file = "./input.tmp"  # Temporary file path
 
+def add_preamble():
+        # Example binary string
+    binarypreamble = b'11000110101100111111010110101000011010110011111000110101100'
+    file_path =input_file
+    with open(file_path, 'rb') as file:
+        plaintext = file.read()
+    preamble = binarypreamble * 300
+    detect_sequence = b'sts'  # Sequence to detect preamble
+    
+    with open(tmp_file, 'wb') as output:
+        output.write(preamble + detect_sequence + plaintext + detect_sequence + preamble)
 
 class Telelink(gr.top_block, Qt.QWidget):
 
@@ -512,9 +527,9 @@ class Telelink(gr.top_block, Qt.QWidget):
         self.blocks_repack_bits_bb_0_0 = blocks.repack_bits_bb(8, 1, 'packet_len', False, gr.GR_MSB_FIRST)
         self.blocks_repack_bits_bb_0 = blocks.repack_bits_bb(1, 8, '', True, gr.GR_MSB_FIRST)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(0.8)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, './tx.tmp', False, 0, 0)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, tmp_file, False, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, './rx.tmp', False)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, output_file, False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_delay_0 = blocks.delay(gr.sizeof_float*1, delay)
         self.blocks_char_to_float_1_1 = blocks.char_to_float(1, 1)
@@ -834,4 +849,5 @@ def main(top_block_cls=Telelink, options=None):
     qapp.exec_()
 
 if __name__ == '__main__':
+    add_preamble()
     main()
