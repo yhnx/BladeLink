@@ -13,7 +13,7 @@ def add_preamble(file,filetype):
     detect_sequence = b'sts'  # Sequence to detect preamble
     
     with open('./tx.tmp', 'wb') as output_file:
-        output_file.write(preamble + detect_sequence + plaintext + detect_sequence+binarypreamble+ + preamble)
+        output_file.write(preamble + detect_sequence + plaintext + detect_sequence+binarypreamble+bytes(int(filetype)) + preamble)
 
 
 if __name__ == "__main__":
