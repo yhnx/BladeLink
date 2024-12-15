@@ -426,7 +426,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2704, 188.0]
+    coordinate: [2704, 204.0]
     rotation: 0
     state: enabled
 - name: samp_rate_blade
@@ -438,7 +438,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2696, 116.0]
+    coordinate: [2696, 76.0]
     rotation: 0
     state: enabled
 - name: spr
@@ -528,7 +528,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2768, 124.0]
+    coordinate: [2784, 148.0]
     rotation: 0
     state: enabled
 - name: txbw
@@ -540,7 +540,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2792, 212.0]
+    coordinate: [2800, 212.0]
     rotation: 0
     state: enabled
 - name: txgain
