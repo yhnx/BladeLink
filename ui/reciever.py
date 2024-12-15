@@ -102,7 +102,7 @@ class ReceiverFrame:
             global content
             
             detect_sequence = b'sts'
-            preamble = bytes([0b10101010]) * 3000
+            preamble = b'11000110101100111111010110101000011010110011111000110101100'
 
             with open(file_path, 'rb') as file:
                 content = file.read()
