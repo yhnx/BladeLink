@@ -27,7 +27,7 @@ class OptionsFrame:
                         )
         try:
             # Load the image
-            image_path = r"C:\\Users\\Bathiya Dissanayake\\Downloads\\tele-removebg-preview.png"  # Replace with your image path
+            image_path = r"tele-removebg-preview.png"  # Replace with your image path
             img = Image.open(image_path)
             img.thumbnail((100, 100))  # Resize the image to fit better (optional)
             img_tk = ImageTk.PhotoImage(img)
