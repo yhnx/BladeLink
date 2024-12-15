@@ -1,36 +1,36 @@
 import numpy as np
 from gnuradio import gr
+import pmt
 
-class bit_stream_generator(gr.sync_block):
-    """
-    Custom block to generate a bit stream.
-    """
-    def __init__(self, bit_pattern="101010", bit_rate=10):
-        """
-        Initialize the block.
-        :param bit_pattern: String of '1's and '0's representing the bit pattern.
-        :param bit_rate: Number of bits per second.
-        """
-        self.bit_pattern = [int(b) for b in bit_pattern]
-        self.bit_rate = bit_rate
-        self.sample_rate = 10  # Default sample rate in samples/sec.
-        self.samples_per_bit = int(self.sample_rate / self.bit_rate)
-        
-        super().__init__(
-            name="bit_stream_generator",
-            in_sig=None,
-            out_sig=[np.int8]  # Output a stream of bits as 8-bit integers
-        )
+class TagSwitch(gr.sync_block):
+    def __init__(self,tag_key="",button=1):
+        gr.sync_block.__init__(self,
+                               name="TagSwitch",
+                               in_sig=[np.int8],
+                               out_sig=[np.int8]*2)
+        self.tag_key = tag_key
+        self.current_output = 0
+        self.button=button
 
     def work(self, input_items, output_items):
-        """
-        Process block logic.
-        """
-        output = output_items[0]
-        num_bits = len(output) // self.samples_per_bit
-        bit_sequence = np.tile(self.bit_pattern, num_bits // len(self.bit_pattern) + 1)
+        tags = self.get_tags_in_range(0, 0, len(input_items[0]))
+        for tag in tags:
+            if pmt.to_python(tag.key) == self.tag_key:
+                self.current_output = 1 if self.current_output == 0 else 0
+                print(self.current_output)
         
-        for i in range(num_bits):
-            output[i * self.samples_per_bit:(i + 1) * self.samples_per_bit] = bit_sequence[i]
+        out_data_1 = output_items[1]
+        out_data_0 = output_items[0]
+
+        in_data = input_items[0]
+
+        if(int(self.current_output)):in_data = input_items[0]*0
+        else: pass
         
-        return len(output)
+
+        # Copy input to both outputs
+        out_data_0[:] = in_data*self.button
+        out_data_1[:] = in_data*self.button
+
+        return len(in_data)
+        
