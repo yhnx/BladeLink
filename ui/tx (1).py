@@ -2,8 +2,9 @@ import sys
 
 
 
-def add_preamble(file,type):
+def add_preamble(file,filetype):
         # Example binary string
+    print(filetype)
     binarypreamble = b'11000110101100111111010110101000011010110011111000110101100'
     file_path =file
     with open(file_path, 'rb') as file:
@@ -12,7 +13,7 @@ def add_preamble(file,type):
     detect_sequence = b'sts'  # Sequence to detect preamble
     
     with open('./tx.tmp', 'wb') as output_file:
-        output_file.write(preamble + detect_sequence + plaintext + detect_sequence+binarypreamble +type+ preamble)
+        output_file.write(preamble + detect_sequence + plaintext + detect_sequence+binarypreamble+ + preamble)
 
 
 if __name__ == "__main__":
@@ -21,6 +22,6 @@ if __name__ == "__main__":
         sys.exit(1)
 
     file = sys.argv[1]
-    type = sys.argv[1]
-    add_preamble(file,type)
+    filetype = sys.argv[2]
+    add_preamble(file,filetype)
     print('file created')
