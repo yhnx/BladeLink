@@ -77,4 +77,3 @@ class MainFrame:
         # Arrange buttons in the frame
         start_button.grid(row=0, column=0, padx=10, pady=10)
         exit_button.grid(row=0, column=1, padx=10, pady=10)
-
