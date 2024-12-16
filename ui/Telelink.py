@@ -5,7 +5,10 @@
 # SPDX-License-Identifier: GPL-3.0
 #
 # GNU Radio Python Flow Graph
-# Title: QPSK_text_tx_rxgrc
+# Title: Telelink_cdp
+# Author: Telelink
+# Copyright: Telelink
+# Description: cdp project
 # GNU Radio version: 3.10.9.2
 
 from PyQt5 import Qt
@@ -29,13 +32,75 @@ from gnuradio import soapy
 import sip
 
 
+def snipfcn_snippet_0(self):
+    # Function to remove both front and back preambles and sequence from file
+    import time
+    import subprocess
+    def remove_preamble(file_path):
+        global content
 
-class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
+        detect_sequence = b'sts'
+
+        #with open(file_path, 'rb') as file:
+            #content = file.read()
+
+        start_index = content.find(detect_sequence)
+        if start_index != -1:
+            content = content[start_index + len(detect_sequence):]
+
+        end_index = content.rfind(detect_sequence)
+        if end_index != -1:
+            content = content[:end_index]
+
+    def tag():
+         global content
+         detected=False
+         typs=[b'mp3',b'jpeg',b'mp4']
+
+         while(not(detected)):
+            with open('./rx.tmp', 'rb') as file:
+                content = file.read()
+            time.sleep(1)
+            for tag in typs:
+                position= content.rfind(tag)
+                if position != -1:
+                    remove_preamble('./rx.tmp')
+                    if(tag==b'jpeg'):
+                        with open("./out.jpg", 'wb') as file:
+                            file.write(content)
+                            detected=True
+                            subprocess.run(["open","./out.jpg"])
+                    if(tag==b'mp3'):
+                        with open("./out.mp3", 'wb') as file:
+                            file.write(content)
+                            subprocess.run(["open","./out.mp3"])
+                            detected=True
+                    if(tag==b'ts'):
+                        with open("./out.ts", 'wb') as file:
+                            file.write(content)
+                            subprocess.run(["open","./out.ts"])
+                            detected=True
+                    if(tag==b'mp4'):
+                        with open("./out.mp4", 'wb') as file:
+                            file.write(content)
+                            subprocess.run(["open","./out.mp4"])
+                            detected=True
+                        print("detected")
+
+
+    # Remove both front and back preambles and sequence from the output.tmp file
+    tag()
+
+
+def snippets_main_after_stop(tb):
+    snipfcn_snippet_0(tb)
+
+class Telelink(gr.top_block, Qt.QWidget):
 
     def __init__(self, MTU=1500):
-        gr.top_block.__init__(self, "QPSK_text_tx_rxgrc", catch_exceptions=True)
+        gr.top_block.__init__(self, "Telelink_cdp", catch_exceptions=True)
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("QPSK_text_tx_rxgrc")
+        self.setWindowTitle("Telelink_cdp")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -53,7 +118,7 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "QPSK_text_tx_rx")
+        self.settings = Qt.QSettings("GNU Radio", "Telelink")
 
         try:
             geometry = self.settings.value("geometry")
@@ -84,8 +149,8 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.time_offset = time_offset = 1.00
         self.taps = taps = [1.0, 0.25-0.25j, 0.50 + 0.10j, -0.3 + 0.2j]
         self.spr = spr = 750000
-        self.samp_rate_blade = samp_rate_blade = 750e3
-        self.samp_rate = samp_rate = 750e3
+        self.samp_rate_blade = samp_rate_blade = 600e3
+        self.samp_rate = samp_rate = 600e3
         self.rxbw = rxbw = 10000
         self.rx_freq_ = rx_freq_ = 433e6
         self.rrc_taps = rrc_taps = firdes.root_raised_cosine(nfilts, nfilts, 1.0/float(sps), 0.35, 11*sps*nfilts)
@@ -95,7 +160,7 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.phase_bw = phase_bw = 6.28/100.0
         self.noise_volt = noise_volt = 0.0001
         self.if_gain = if_gain = 40
-        self.hdr_format = hdr_format = digital.header_format_default('00011010110011111111110000011101',1, 1)
+        self.hdr_format = hdr_format = digital.header_format_default('11100001010110101110100010010011',1, 1)
         self.freq_offset = freq_offset = 0
         self.freq = freq = 2.4e9
         self.excess_bw = excess_bw = .5
@@ -197,7 +262,7 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.soapy_bladerf_sink_0 = soapy.sink(dev, "fc32", 1, 'bladerf=0',
                                   stream_args, tune_args, settings)
         self.soapy_bladerf_sink_0.set_sample_rate(0, samp_rate_blade)
-        self.soapy_bladerf_sink_0.set_bandwidth(0, txbw)
+        self.soapy_bladerf_sink_0.set_bandwidth(0, 10000)
         self.soapy_bladerf_sink_0.set_frequency(0, freq)
         self.soapy_bladerf_sink_0.set_frequency_correction(0, 0)
         self.soapy_bladerf_sink_0.set_gain(0, min(max(txgain, 17.0), 73.0))
@@ -487,7 +552,7 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.digital_linear_equalizer_0_0 = digital.linear_equalizer(15, 4, variable_adaptive_algorithm_0, True, [ ], 'corr_est')
         self.digital_diff_decoder_bb_0 = digital.diff_decoder_bb(4, digital.DIFF_DIFFERENTIAL)
         self.digital_costas_loop_cc_0 = digital.costas_loop_cc(phase_bw, arity, False)
-        self.digital_correlate_access_code_xx_ts_0 = digital.correlate_access_code_bb_ts('00011010110011111111110000011101',
+        self.digital_correlate_access_code_xx_ts_0 = digital.correlate_access_code_bb_ts('11100001010110101110100010010011',
           2, "packet_len")
         self.digital_constellation_modulator_0 = digital.generic_mod(
             constellation=qpsk,
@@ -508,9 +573,10 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.blocks_repack_bits_bb_0_0_0 = blocks.repack_bits_bb(1, 8, 'packet_len', False, gr.GR_MSB_FIRST)
         self.blocks_repack_bits_bb_0_0 = blocks.repack_bits_bb(8, 1, 'packet_len', False, gr.GR_MSB_FIRST)
         self.blocks_repack_bits_bb_0 = blocks.repack_bits_bb(1, 8, '', True, gr.GR_MSB_FIRST)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, '/home/praveen/Documents/git/CDP/source_files/text.txt', True, 0, 0)
+        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(0.8)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, './tx.tmp', False, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, '/home/praveen/Documents/git/CDP/source_files/out.txt', False)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, './rx.tmp', False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_delay_0 = blocks.delay(gr.sizeof_float*1, delay)
         self.blocks_char_to_float_1_1 = blocks.char_to_float(1, 1)
@@ -528,6 +594,7 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_char_to_float_1_1, 0), (self.fec_extended_tagged_decoder_2, 0))
         self.connect((self.blocks_delay_0, 0), (self.qtgui_time_sink_x_0_0, 1))
         self.connect((self.blocks_file_source_0, 0), (self.blocks_throttle2_0_0, 0))
+        self.connect((self.blocks_multiply_const_vxx_0, 0), (self.soapy_bladerf_sink_0, 0))
         self.connect((self.blocks_repack_bits_bb_0, 0), (self.blocks_file_sink_0, 0))
         self.connect((self.blocks_repack_bits_bb_0_0, 0), (self.fec_extended_tagged_encoder_0_1, 0))
         self.connect((self.blocks_repack_bits_bb_0_0_0, 0), (self.blocks_tagged_stream_mux_0, 1))
@@ -542,8 +609,8 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_unpack_k_bits_bb_0_0, 0), (self.blocks_char_to_float_0_0_0, 0))
         self.connect((self.digital_constellation_decoder_cb_0, 0), (self.blocks_char_to_float_0, 0))
         self.connect((self.digital_constellation_decoder_cb_0, 0), (self.digital_diff_decoder_bb_0, 0))
+        self.connect((self.digital_constellation_modulator_0, 0), (self.blocks_multiply_const_vxx_0, 0))
         self.connect((self.digital_constellation_modulator_0, 0), (self.qtgui_freq_sink_x_0, 0))
-        self.connect((self.digital_constellation_modulator_0, 0), (self.soapy_bladerf_sink_0, 0))
         self.connect((self.digital_correlate_access_code_xx_ts_0, 0), (self.digital_map_bb_0_0, 0))
         self.connect((self.digital_costas_loop_cc_0, 0), (self.digital_constellation_decoder_cb_0, 0))
         self.connect((self.digital_costas_loop_cc_0, 0), (self.qtgui_const_sink_x_0, 0))
@@ -560,11 +627,11 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
 
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "QPSK_text_tx_rx")
+        self.settings = Qt.QSettings("GNU Radio", "Telelink")
         self.settings.setValue("geometry", self.saveGeometry())
         self.stop()
         self.wait()
-
+        snippets_main_after_stop(self)
         event.accept()
 
     def get_MTU(self):
@@ -625,7 +692,6 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
 
     def set_txbw(self, txbw):
         self.txbw = txbw
-        self.soapy_bladerf_sink_0.set_bandwidth(0, self.txbw)
 
     def get_tx_freq(self):
         return self.tx_freq
@@ -794,14 +860,15 @@ class QPSK_text_tx_rx(gr.top_block, Qt.QWidget):
 
 
 def argument_parser():
-    parser = ArgumentParser()
+    description = 'cdp project'
+    parser = ArgumentParser(description=description)
     parser.add_argument(
         "--MTU", dest="MTU", type=intx, default=1500,
         help="Set MTU [default=%(default)r]")
     return parser
 
 
-def main(top_block_cls=QPSK_text_tx_rx, options=None):
+def main(top_block_cls=Telelink, options=None):
     if options is None:
         options = argument_parser().parse_args()
 
@@ -816,7 +883,7 @@ def main(top_block_cls=QPSK_text_tx_rx, options=None):
     def sig_handler(sig=None, frame=None):
         tb.stop()
         tb.wait()
-
+        snippets_main_after_stop(tb)
         Qt.QApplication.quit()
 
     signal.signal(signal.SIGINT, sig_handler)
