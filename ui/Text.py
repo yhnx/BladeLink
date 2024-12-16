@@ -49,26 +49,12 @@ class TextFrame:
 
         # Function to run external script in a separate thread
         def run_qpsk_script_with_text():
-            text_content = text_entry.get("1.0", tk.END).strip()
-            if not text_content:
-                messagebox.showwarning("Warning", "Text message cannot be empty!")
-                return
-
             try:
-                # Save the text content to a temporary file
-                input_file = "input_text.txt"
-                with open(input_file, "w") as file:
-                    file.write(text_content)
-
-                # Set environment variables
-                os.environ['INPUT_FILE'] = input_file
-                os.environ['OUTPUT_FILE'] = "/output.tmp"
-
-                # Run the QPSK script
-                subprocess.run(["python3", "QPSK_text_tx_rx.py"], check=True)
-                messagebox.showinfo("Execution Complete", "QPSK script executed successfully!")
-                self.switch_back_callback()
-
+                os.environ['INPUT_FILE'] = self.selected_image_path
+                os.environ['OUTPUT_FILE'] = "./output.tmp"  # Define output file path
+                subprocess.run(["python3", "tx.py",self.selected_image_path,"jpeg"], check=True)
+                subprocess.run(["python3", "Telelink.py"], check=True)
+                messagebox.showinfo("Execution Complete", "QPSK script executed successfully.")
             except subprocess.CalledProcessError as e:
                 messagebox.showerror("Error", f"Script execution failed: {e}")
             except Exception as e:
