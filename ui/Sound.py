@@ -88,9 +88,9 @@ class SoundFrame:
         # Function to run the QPSK script with the audio
         def run_qpsk_script_with_audio():
             try:
-                os.environ['INPUT_FILE'] = self.selected_image_path
+                os.environ['INPUT_FILE'] = self.selected_audio_path
                 os.environ['OUTPUT_FILE'] = "./output.tmp"  # Define output file path
-                subprocess.run(["python3", "tx.py",self.selected_image_path,"mp3"], check=True)
+                subprocess.run(["python3", "tx.py",self.selected_audio_path,"mp3"], check=True)
                 subprocess.run(["python3", "Telelink.py"], check=True)
                 messagebox.showinfo("Execution Complete", "QPSK script executed successfully.")
             except subprocess.CalledProcessError as e:

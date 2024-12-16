@@ -88,9 +88,9 @@ class VideoFrame:
         # Function to run the QPSK script with the video
         def run_qpsk_script_with_video():
             try:
-                os.environ['INPUT_FILE'] = self.selected_image_path
+                os.environ['INPUT_FILE'] = self.selected_video_path
                 os.environ['OUTPUT_FILE'] = "./output.tmp"  # Define output file path
-                subprocess.run(["python3", "tx.py",self.selected_image_path,"mp4"], check=True)
+                subprocess.run(["python3", "tx.py",self.selected_video_path,"mp4"], check=True)
                 subprocess.run(["python3", "Telelink.py"], check=True)
                 messagebox.showinfo("Execution Complete", "QPSK script executed successfully.")
             except subprocess.CalledProcessError as e:
