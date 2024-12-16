@@ -426,7 +426,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2704, 204.0]
+    coordinate: [2704, 188.0]
     rotation: 0
     state: enabled
 - name: samp_rate_blade
@@ -438,7 +438,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2696, 76.0]
+    coordinate: [2696, 116.0]
     rotation: 0
     state: enabled
 - name: spr
@@ -528,7 +528,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2784, 148.0]
+    coordinate: [2768, 124.0]
     rotation: 0
     state: enabled
 - name: txbw
@@ -540,7 +540,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2800, 212.0]
+    coordinate: [2792, 212.0]
     rotation: 0
     state: enabled
 - name: txgain
@@ -711,7 +711,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: ./tx.tmp
+    file: /home/praveen/utomp3.com - CHARGE Blender Open Movie_360p.mp4
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -863,7 +863,7 @@ blocks:
     bus_structure: null
     coordinate: [880, 540.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_throttle2_0_0
   id: blocks_throttle2
   parameters:
@@ -958,7 +958,7 @@ blocks:
     bus_structure: null
     coordinate: [1208, 496.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: controls
   id: qtgui_tab_widget
   parameters:
@@ -1706,6 +1706,46 @@ blocks:
     coordinate: [3392, 292.0]
     rotation: 0
     state: enabled
+- name: snippet_0
+  id: snippet
+  parameters:
+    alias: ''
+    code: "# Function to remove both front and back preambles and sequence from file\n\
+      import time\nimport subprocess\ndef remove_preamble(file_path):\n    global\
+      \ content\n    \n    detect_sequence = b'sts'\n\n    #with open(file_path, 'rb')\
+      \ as file:\n        #content = file.read()\n\n    start_index = content.find(detect_sequence)\n\
+      \    if start_index != -1:\n        content = content[start_index + len(detect_sequence):]\n\
+      \n    end_index = content.rfind(detect_sequence)\n    if end_index != -1:\n\
+      \        content = content[:end_index]\n\ndef tag():\n     global content\n\
+      \     detected=False\n     typs=[b'mp3',b'jpeg',b'mp4']\n     \n     while(not(detected)):\n\
+      \        with open('./rx.tmp', 'rb') as file:\n            content = file.read()\n\
+      \        time.sleep(1) \n        for tag in typs:\n            position= content.rfind(tag)\n\
+      \            if position != -1:\n                remove_preamble('./rx.tmp')\n\
+      \                if(tag==b'jpeg'):\n                    with open(\"./out.jpg\"\
+      , 'wb') as file:\n                        file.write(content)\n            \
+      \            detected=True\n                        subprocess.run([\"open\"\
+      ,\"./out.jpg\"])\n                if(tag==b'mp3'):\n                    with\
+      \ open(\"./out.mp3\", 'wb') as file:\n                        file.write(content)\n\
+      \                        subprocess.run([\"open\",\"./out.mp3\"])\n        \
+      \                detected=True\n                if(tag==b'ts'):\n          \
+      \          with open(\"./out.ts\", 'wb') as file:\n                        file.write(content)\n\
+      \                        subprocess.run([\"open\",\"./out.ts\"])\n         \
+      \               detected=True\n                if(tag==b'mp4'):\n          \
+      \          with open(\"./out.mp4\", 'wb') as file:\n                       \
+      \ file.write(content)\n                        subprocess.run([\"open\",\"./out.mp4\"\
+      ])\n                        detected=True\n                    print(\"detected\"\
+      )\n\n\n# Remove both front and back preambles and sequence from the output.tmp\
+      \ file\ntag()"
+    comment: ''
+    priority: '0'
+    section: main_after_stop
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1096, 52.0]
+    rotation: 0
+    state: enabled
 - name: soapy_bladerf_sink_0
   id: soapy_bladerf_sink
   parameters:
@@ -1747,7 +1787,7 @@ blocks:
     bus_structure: null
     coordinate: [1232, 312.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: virtual_sink_0_0
   id: virtual_sink
   parameters:
