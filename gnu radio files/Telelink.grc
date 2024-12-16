@@ -89,27 +89,6 @@ blocks:
     coordinate: [2640, 552.0]
     rotation: 0
     state: enabled
-- name: con
-  id: variable_qtgui_range
-  parameters:
-    comment: ''
-    gui_hint: ''
-    label: ''
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: '0'
-    step: '0.01'
-    stop: '1'
-    value: '0.5'
-    widget: counter_slider
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1128, 396.0]
-    rotation: 0
-    state: enabled
 - name: delay
   id: variable_qtgui_range
   parameters:
@@ -209,7 +188,7 @@ blocks:
 - name: hdr_format
   id: variable_header_format_default
   parameters:
-    access_code: '101010101010101011111'
+    access_code: '11100001010110101110100010010011'
     bps: '1'
     comment: ''
     threshold: '1'
@@ -753,7 +732,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: con
+    const: '0.8'
     maxoutbuf: '0'
     minoutbuf: '0'
     type: complex
@@ -1039,7 +1018,7 @@ blocks:
     comment: Modulation block
     constellation: qpsk
     differential: 'True'
-    excess_bw: '0.3'
+    excess_bw: '0.5'
     log: 'False'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -1496,7 +1475,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1656, 276.0]
+    coordinate: [1560, 300.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0
@@ -1738,13 +1717,13 @@ blocks:
     dev_args: bladerf=0
     freq_correction: '0'
     gain: txgain
-    samp_rate: samp_rate_blade
+    samp_rate: samp_rate_blade*2
     type: fc32
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [904, 320.0]
+    coordinate: [880, 312.0]
     rotation: 0
     state: enabled
 - name: soapy_bladerf_source_0
@@ -1760,7 +1739,7 @@ blocks:
     gain: '30.0'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samp_rate: samp_rate_blade
+    samp_rate: samp_rate_blade*2
     type: fc32
   states:
     bus_sink: false
@@ -1792,7 +1771,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1240, 1004.0]
+    coordinate: [1216, 1012.0]
     rotation: 0
     state: true
 - name: virtual_source_0
