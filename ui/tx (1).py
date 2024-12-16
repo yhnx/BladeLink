@@ -17,7 +17,7 @@ def add_preamble():
     detect_sequence = b'sts'  # Sequence to detect preamble
     
     with open(tmp_file, 'wb') as output:
-        output.write(preamble + detect_sequence + plaintext + detect_sequence + preamble)
+        output.write(preamble + detect_sequence + ciphertext + detect_sequence + preamble)
 
 #Encryption
 def pad(data):
