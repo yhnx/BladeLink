@@ -884,7 +884,7 @@ blocks:
     bus_structure: null
     coordinate: [216, 148.0]
     rotation: 0
-    state: enabled
+    state: bypassed
 - name: blocks_throttle2_1
   id: blocks_throttle2
   parameters:
@@ -1714,7 +1714,7 @@ blocks:
     bandwidth: '10000'
     center_freq: freq
     comment: ''
-    dev_args: bladerf=0
+    dev_args: bladerf="0"
     freq_correction: '0'
     gain: txgain
     samp_rate: samp_rate_blade*2
