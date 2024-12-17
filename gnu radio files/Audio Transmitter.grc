@@ -188,7 +188,7 @@ blocks:
 - name: hdr_format
   id: variable_header_format_default
   parameters:
-    access_code: '011111110'
+    access_code: '11100001010110101110100010010011'
     bps: '1'
     comment: ''
     threshold: '1'
@@ -438,7 +438,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2688, 84.0]
+    coordinate: [2696, 116.0]
     rotation: 0
     state: enabled
 - name: spr
@@ -590,7 +590,7 @@ blocks:
     label: MTU
     short_id: ''
     type: intx
-    value: '150000'
+    value: '1500'
   states:
     bus_sink: false
     bus_source: false
@@ -598,25 +598,6 @@ blocks:
     coordinate: [2872, 164.0]
     rotation: 0
     state: enabled
-- name: audio_source_0
-  id: audio_source
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    device_name: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    num_outputs: '1'
-    ok_to_block: 'True'
-    samp_rate: '48000'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [224, 428.0]
-    rotation: 0
-    state: disabled
 - name: blocks_char_to_float_0
   id: blocks_char_to_float
   parameters:
@@ -736,7 +717,7 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
-    repeat: 'True'
+    repeat: 'False'
     type: byte
     vlen: '1'
   states:
@@ -744,23 +725,6 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [16, 116.0]
-    rotation: 0
-    state: enabled
-- name: blocks_float_to_char_0
-  id: blocks_float_to_char
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    scale: '1'
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [440, 348.0]
     rotation: 0
     state: disabled
 - name: blocks_multiply_const_vxx_0
@@ -850,7 +814,7 @@ blocks:
     len_tag_key: '"packet_len"'
     maxoutbuf: '0'
     minoutbuf: '0'
-    packet_len: '256'
+    packet_len: '8'
     type: byte
     vlen: '1'
   states:
@@ -1072,7 +1036,7 @@ blocks:
 - name: digital_correlate_access_code_xx_ts_0
   id: digital_correlate_access_code_xx_ts
   parameters:
-    access_code: '011111110'
+    access_code: '11100001010110101110100010010011'
     affinity: ''
     alias: ''
     comment: ''
@@ -1280,7 +1244,7 @@ blocks:
     bus_structure: null
     coordinate: [1624, 1020.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: network_udp_source_0
   id: network_udp_source
   parameters:
@@ -1303,7 +1267,7 @@ blocks:
     bus_structure: null
     coordinate: [24, 316.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: qtgui_const_sink_x_0
   id: qtgui_const_sink_x
   parameters:
@@ -1895,14 +1859,12 @@ blocks:
     state: enabled
 
 connections:
-- [audio_source_0, '0', blocks_float_to_char_0, '0']
 - [blocks_char_to_float_0, '0', qtgui_time_sink_x_0, '0']
 - [blocks_char_to_float_0_0, '0', qtgui_time_sink_x_0_0, '0']
 - [blocks_char_to_float_0_0_0, '0', blocks_delay_0, '0']
 - [blocks_char_to_float_1_1, '0', fec_extended_tagged_decoder_2, '0']
 - [blocks_delay_0, '0', qtgui_time_sink_x_0_0, '1']
 - [blocks_file_source_0, '0', blocks_throttle2_0_0, '0']
-- [blocks_float_to_char_0, '0', blocks_throttle2_0_0, '0']
 - [blocks_multiply_const_vxx_0, '0', soapy_bladerf_sink_0, '0']
 - [blocks_repack_bits_bb_0, '0', blocks_file_sink_0, '0']
 - [blocks_repack_bits_bb_0, '0', network_udp_sink_0, '0']
