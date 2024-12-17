@@ -135,7 +135,7 @@ blocks:
   id: variable
   parameters:
     comment: Set Bandwidth
-    value: '.5'
+    value: '.35'
   states:
     bus_sink: false
     bus_source: false
@@ -614,7 +614,7 @@ blocks:
     bus_structure: null
     coordinate: [2152, 1004.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: blocks_char_to_float_0_0
   id: blocks_char_to_float
   parameters:
@@ -631,7 +631,7 @@ blocks:
     bus_structure: null
     coordinate: [928, 860.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: blocks_char_to_float_0_0_0
   id: blocks_char_to_float
   parameters:
@@ -648,7 +648,7 @@ blocks:
     bus_structure: null
     coordinate: [464, 1012.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_char_to_float_1_1
   id: blocks_char_to_float
   parameters:
@@ -665,7 +665,7 @@ blocks:
     bus_structure: null
     coordinate: [800, 1212.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_delay_0
   id: blocks_delay
   parameters:
@@ -685,7 +685,7 @@ blocks:
     bus_structure: null
     coordinate: [688, 1012.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_file_sink_0
   id: blocks_file_sink
   parameters:
@@ -703,7 +703,7 @@ blocks:
     bus_structure: null
     coordinate: [1648, 1192.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_file_source_0
   id: blocks_file_source
   parameters:
@@ -711,12 +711,13 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/praveen/Desktop/cdp/EN2130_Communication_Design_Project/source_files/text.txt
+    file: /home/praveen/Desktop/cdp/EN2130_Communication_Design_Project/gnu radio
+      files/tx.tmp
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
-    repeat: 'True'
+    repeat: 'False'
     type: byte
     vlen: '1'
   states:
@@ -763,7 +764,7 @@ blocks:
     bus_structure: null
     coordinate: [1368, 1204.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_repack_bits_bb_0_0
   id: blocks_repack_bits_bb
   parameters:
@@ -905,7 +906,7 @@ blocks:
     bus_structure: null
     coordinate: [248, 540.0]
     rotation: 0
-    state: enabled
+    state: bypassed
 - name: blocks_unpack_k_bits_bb_0
   id: blocks_unpack_k_bits_bb
   parameters:
@@ -921,7 +922,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 860.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: blocks_unpack_k_bits_bb_0_0
   id: blocks_unpack_k_bits_bb
   parameters:
@@ -937,7 +938,7 @@ blocks:
     bus_structure: null
     coordinate: [248, 1012.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: channels_channel_model_0
   id: channels_channel_model
   parameters:
@@ -1009,7 +1010,7 @@ blocks:
     bus_structure: null
     coordinate: [2352, 860.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: digital_constellation_modulator_0
   id: digital_constellation_modulator
   parameters:
@@ -1050,7 +1051,7 @@ blocks:
     bus_structure: null
     coordinate: [304, 1192.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_costas_loop_cc_0
   id: digital_costas_loop_cc
   parameters:
@@ -1068,7 +1069,7 @@ blocks:
     bus_structure: null
     coordinate: [2288, 452.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_diff_decoder_bb_0
   id: digital_diff_decoder_bb
   parameters:
@@ -1085,7 +1086,7 @@ blocks:
     bus_structure: null
     coordinate: [1704, 852.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: digital_linear_equalizer_0_0
   id: digital_linear_equalizer
   parameters:
@@ -1106,7 +1107,7 @@ blocks:
     bus_structure: null
     coordinate: [1976, 484.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_map_bb_0
   id: digital_map_bb
   parameters:
@@ -1123,7 +1124,7 @@ blocks:
     bus_structure: null
     coordinate: [1472, 860.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: digital_map_bb_0_0
   id: digital_map_bb
   parameters:
@@ -1139,7 +1140,7 @@ blocks:
     bus_structure: null
     coordinate: [640, 1212.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_protocol_formatter_bb_0
   id: digital_protocol_formatter_bb
   parameters:
@@ -1183,7 +1184,7 @@ blocks:
     bus_structure: null
     coordinate: [1528, 456.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: fec_extended_tagged_decoder_2
   id: fec_extended_tagged_decoder
   parameters:
@@ -1204,7 +1205,7 @@ blocks:
     bus_structure: null
     coordinate: [1008, 1172.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: fec_extended_tagged_encoder_0_1
   id: fec_extended_tagged_encoder
   parameters:
@@ -1315,7 +1316,7 @@ blocks:
     bus_structure: null
     coordinate: [2312, 316.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: qtgui_freq_sink_x_0
   id: qtgui_freq_sink_x
   parameters:
@@ -1477,7 +1478,7 @@ blocks:
     bus_structure: null
     coordinate: [1560, 300.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0
   id: qtgui_time_sink_x
   parameters:
@@ -1574,7 +1575,7 @@ blocks:
     bus_structure: null
     coordinate: [1872, 984.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0_0
   id: qtgui_time_sink_x
   parameters:
@@ -1671,7 +1672,7 @@ blocks:
     bus_structure: null
     coordinate: [896, 976.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: received
   id: qtgui_tab_widget
   parameters:
@@ -1747,7 +1748,7 @@ blocks:
     bus_structure: null
     coordinate: [1232, 312.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: virtual_sink_0_0
   id: virtual_sink
   parameters:
@@ -1773,7 +1774,7 @@ blocks:
     bus_structure: null
     coordinate: [1216, 1012.0]
     rotation: 0
-    state: true
+    state: disabled
 - name: virtual_source_0
   id: virtual_source
   parameters:
@@ -1799,7 +1800,7 @@ blocks:
     bus_structure: null
     coordinate: [8, 1012.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: virtual_source_2
   id: virtual_source
   parameters:
@@ -1812,7 +1813,7 @@ blocks:
     bus_structure: null
     coordinate: [16, 1212.0]
     rotation: 0
-    state: true
+    state: disabled
 
 connections:
 - [blocks_char_to_float_0, '0', qtgui_time_sink_x_0, '0']

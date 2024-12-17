@@ -9,7 +9,7 @@ def add_preamble():
     file_path =input()
     with open(file_path, 'rb') as file:
         plaintext = file.read()
-    preamble = binarypreamble * 500
+    preamble = binarypreamble * 3000
     detect_sequence = b'sts'  # Sequence to detect preamble
     
     with open('./tx.tmp', 'wb') as output_file:
