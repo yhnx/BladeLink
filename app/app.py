@@ -8,13 +8,14 @@ from PIL import Image, ImageTk  # Import Image and ImageTk
 from Crypto.Cipher import AES
 
 class TransmittingApp(ctk.CTk):
+
+
     def __init__(self):
         super().__init__()
-
         # Try to set icon using PIL Image
         try:
             # Load the icon
-            icon_path = r"./transmitter/src/signal-tower.ico"  # Example location
+            icon_path = r"./transmitter/src/signal-tower.ico" # Example location
             try:
                 self.iconbitmap(icon_path)  # Use for .ico files
             except tk.TclError:
@@ -247,14 +248,11 @@ class TransmittingApp(ctk.CTk):
                     file_path = self.selected_file_path
                     with open(file_path, 'rb') as file:
                         plaintext = file.read()
-                    preamble = binarypreamble * 30
-                    detect_sequence = b'sts'  # Sequence to detect preamble
+                    preamble = binarypreamble * 300
                     
                     with open(tmp_file, 'wb') as output:
                         file_name = os.path.basename(self.selected_file_path)
-                        output.write(preamble + detect_sequence)
-                        output.write(file_name)
-                        output.write(detect_sequence + plaintext + detect_sequence + preamble)
+                        output.write(preamble+b'sts' + file_name.encode()+b'||'+plaintext + b"end" + preamble)
 
                         #Encryption
                         def pad(data):
