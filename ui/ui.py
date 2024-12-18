@@ -252,8 +252,9 @@ class TransmittingApp(ctk.CTk):
                     
                     with open(tmp_file, 'wb') as output:
                         file_name = os.path.basename(self.selected_file_path)
-                        #file = bytes(file_name)
-                        output.write(preamble + detect_sequence + detect_sequence + plaintext + detect_sequence + preamble)
+                        output.write(preamble + detect_sequence)
+                        output.write(file_name)
+                        output.write(detect_sequence + plaintext + detect_sequence + preamble)
 
                         #Encryption
                         def pad(data):
