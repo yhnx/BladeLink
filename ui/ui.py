@@ -239,8 +239,6 @@ class TransmittingApp(ctk.CTk):
         def run_telelink():
             try:
                 # Set environment variable for file path
-
-                os.environ['INPUT_FILE']= "./input.tmp" # Define input file path
                 tmp_file = "./input.tmp"  # Temporary file path
 
                 def add_preamble():
@@ -254,7 +252,8 @@ class TransmittingApp(ctk.CTk):
                     
                     with open(tmp_file, 'wb') as output:
                         file_name = os.path.basename(self.selected_file_path)
-                        output.write(preamble + detect_sequence + file_name + detect_sequence + plaintext + detect_sequence + preamble)
+                        #file = bytes(file_name)
+                        output.write(preamble + detect_sequence + detect_sequence + plaintext + detect_sequence + preamble)
 
                         #Encryption
                         def pad(data):
@@ -274,10 +273,10 @@ class TransmittingApp(ctk.CTk):
                         predefined_key = b'WeAreTeleLink'
 
                         # Encrypt the file
-                        encrypt_file(self.selected_file_path, predefined_key)
+                        #encrypt_file(self.selected_file_path, predefined_key)
 
-                        #Adds the preamble
-                        add_preamble()
+                #Adds the preamble
+                add_preamble()
 
                 # Start Telelink.py as a subprocess
                 process = subprocess.Popen(
