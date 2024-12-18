@@ -9,7 +9,7 @@
 # Author: Telelink
 # Copyright: Telelink
 # Description: cdp project
-# GNU Radio version: 3.10.9.2
+# GNU Radio version: 3.10.10.0
 
 from PyQt5 import Qt
 from gnuradio import qtgui
@@ -17,6 +17,7 @@ from PyQt5 import QtCore
 from gnuradio import blocks
 import pmt
 from gnuradio import digital
+from gnuradio import filter
 from gnuradio import fec
 from gnuradio import gr
 from gnuradio.filter import firdes
@@ -29,45 +30,6 @@ from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
 from gnuradio import soapy
 import sip
-
-# from Crypto.Cipher import AES
-import os
-
-
-
-input_file = os.environ['INPUT_FILE'] # Define input file path
-output_file = os.environ['OUTPUT_FILE']  # Define output file path
-tmp_file = "/input.tmp"  # Temporary file path
-
-def add_preamble():
-        # Example binary string
-    binarypreamble = b'11000110101100111111010110101000011010110011111000110101100'
-    file_path =input_file
-    with open(file_path, 'rb') as file:
-        plaintext = file.read()
-    preamble = binarypreamble * 30
-    detect_sequence = b'sts'  # Sequence to detect preamble
-    
-    with open(tmp_file, 'wb') as output:
-        output.write(preamble + detect_sequence + plaintext + detect_sequence + preamble)
-
-# #Encryption
-# def pad(data):
-#     # Padding the data to be a multiple of 16 bytes
-#     return data + b"\0" * (AES.block_size - len(data) % AES.block_size)
-
-# def encrypt_file(file_path, key):
-#     global ciphertext
-#     with open(file_path, 'rb') as file:
-#         plaintext = file.read()
-
-#     plaintext = pad(plaintext)
-#     cipher = AES.new(key, AES.MODE_ECB)  
-#     ciphertext = cipher.encrypt(plaintext)
-
-
-# predefined_key = b'WeAreTeleLink'
-
 
 
 
@@ -150,12 +112,6 @@ class Telelink(gr.top_block, Qt.QWidget):
         # Blocks
         ##################################################
 
-        self._txgain_range = qtgui.Range(18, 60, 1, 50, 200)
-        self._txgain_win = qtgui.RangeWidget(self._txgain_range, self.set_txgain, "'txgain'", "counter_slider", float, QtCore.Qt.Horizontal)
-        self.top_layout.addWidget(self._txgain_win)
-        self._freq_range = qtgui.Range(2e9, 6e9, 100e3, 2.4e9, 200)
-        self._freq_win = qtgui.RangeWidget(self._freq_range, self.set_freq, "'freq'", "counter_slider", float, QtCore.Qt.Horizontal)
-        self.top_layout.addWidget(self._freq_win)
         self.controls = Qt.QTabWidget()
         self.controls_widget_0 = Qt.QWidget()
         self.controls_layout_0 = Qt.QBoxLayout(Qt.QBoxLayout.TopToBottom, self.controls_widget_0)
@@ -172,42 +128,9 @@ class Telelink(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._timing_loop_bw_range = qtgui.Range(0.0, 0.2, 0.01, 6.28/100.0, 200)
-        self._timing_loop_bw_win = qtgui.RangeWidget(self._timing_loop_bw_range, self.set_timing_loop_bw, "Time: BW", "slider", float, QtCore.Qt.Horizontal)
-        self.controls_grid_layout_1.addWidget(self._timing_loop_bw_win, 0, 0, 1, 1)
-        for r in range(0, 1):
-            self.controls_grid_layout_1.setRowStretch(r, 1)
-        for c in range(0, 1):
-            self.controls_grid_layout_1.setColumnStretch(c, 1)
-        self._time_offset_range = qtgui.Range(0.999, 1.001, 0.0001, 1.00, 200)
-        self._time_offset_win = qtgui.RangeWidget(self._time_offset_range, self.set_time_offset, "Timing Offset", "counter_slider", float, QtCore.Qt.Horizontal)
-        self.controls_grid_layout_0.addWidget(self._time_offset_win, 0, 2, 1, 1)
-        for r in range(0, 1):
-            self.controls_grid_layout_0.setRowStretch(r, 1)
-        for c in range(2, 3):
-            self.controls_grid_layout_0.setColumnStretch(c, 1)
-        self.soapy_bladerf_sink_0 = None
-        dev = 'driver=bladerf'
-        stream_args = ''
-        tune_args = ['']
-        settings = ['']
-
-        self.soapy_bladerf_sink_0 = soapy.sink(dev, "fc32", 1, 'bladerf=0',
-                                  stream_args, tune_args, settings)
-        self.soapy_bladerf_sink_0.set_sample_rate(0, samp_rate_blade)
-        self.soapy_bladerf_sink_0.set_bandwidth(0, 10000)
-        self.soapy_bladerf_sink_0.set_frequency(0, freq)
-        self.soapy_bladerf_sink_0.set_frequency_correction(0, 0)
-        self.soapy_bladerf_sink_0.set_gain(0, min(max(txgain, 17.0), 73.0))
-        self._rf_gain_sink_range = qtgui.Range(0, 60, 1, 10, 200)
-        self._rf_gain_sink_win = qtgui.RangeWidget(self._rf_gain_sink_range, self.set_rf_gain_sink, "RF gain sink", "counter_slider", float, QtCore.Qt.Horizontal)
-        self.top_layout.addWidget(self._rf_gain_sink_win)
-        self._rf_gain_0_range = qtgui.Range(0, 60, 1, 60, 200)
-        self._rf_gain_0_win = qtgui.RangeWidget(self._rf_gain_0_range, self.set_rf_gain_0, "RF gain", "counter_slider", float, QtCore.Qt.Horizontal)
-        self.top_layout.addWidget(self._rf_gain_0_win)
-        self._rf_gain_range = qtgui.Range(0, 60, 1, 60, 200)
-        self._rf_gain_win = qtgui.RangeWidget(self._rf_gain_range, self.set_rf_gain, "RF gain", "counter_slider", float, QtCore.Qt.Horizontal)
-        self.top_layout.addWidget(self._rf_gain_win)
+        self._txgain_range = qtgui.Range(18, 60, 1, 50, 200)
+        self._txgain_win = qtgui.RangeWidget(self._txgain_range, self.set_txgain, "'txgain'", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_layout.addWidget(self._txgain_win)
         self.received = Qt.QTabWidget()
         self.received_widget_0 = Qt.QWidget()
         self.received_layout_0 = Qt.QBoxLayout(Qt.QBoxLayout.TopToBottom, self.received_widget_0)
@@ -224,11 +147,77 @@ class Telelink(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 1):
             self.top_grid_layout.setColumnStretch(c, 1)
+        self._phase_bw_range = qtgui.Range(0.0, 1.0, 0.01, 6.28/100.0, 200)
+        self._phase_bw_win = qtgui.RangeWidget(self._phase_bw_range, self.set_phase_bw, "Phase: Bandwidth", "slider", float, QtCore.Qt.Horizontal)
+        self.controls_grid_layout_1.addWidget(self._phase_bw_win, 0, 2, 1, 1)
+        for r in range(0, 1):
+            self.controls_grid_layout_1.setRowStretch(r, 1)
+        for c in range(2, 3):
+            self.controls_grid_layout_1.setColumnStretch(c, 1)
+        self._freq_range = qtgui.Range(2e9, 6e9, 100e3, 2.4e9, 200)
+        self._freq_win = qtgui.RangeWidget(self._freq_range, self.set_freq, "'freq'", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_layout.addWidget(self._freq_win)
+        self._delay_range = qtgui.Range(0, 200, 1, 42, 200)
+        self._delay_win = qtgui.RangeWidget(self._delay_range, self.set_delay, "Delay", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_grid_layout.addWidget(self._delay_win, 1, 0, 1, 1)
+        for r in range(1, 2):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(0, 1):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        self._timing_loop_bw_range = qtgui.Range(0.0, 0.2, 0.01, 6.28/100.0, 200)
+        self._timing_loop_bw_win = qtgui.RangeWidget(self._timing_loop_bw_range, self.set_timing_loop_bw, "Time: BW", "slider", float, QtCore.Qt.Horizontal)
+        self.controls_grid_layout_1.addWidget(self._timing_loop_bw_win, 0, 0, 1, 1)
+        for r in range(0, 1):
+            self.controls_grid_layout_1.setRowStretch(r, 1)
+        for c in range(0, 1):
+            self.controls_grid_layout_1.setColumnStretch(c, 1)
+        self._time_offset_range = qtgui.Range(0.999, 1.001, 0.0001, 1.00, 200)
+        self._time_offset_win = qtgui.RangeWidget(self._time_offset_range, self.set_time_offset, "Timing Offset", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.controls_grid_layout_0.addWidget(self._time_offset_win, 0, 2, 1, 1)
+        for r in range(0, 1):
+            self.controls_grid_layout_0.setRowStretch(r, 1)
+        for c in range(2, 3):
+            self.controls_grid_layout_0.setColumnStretch(c, 1)
+        self.soapy_bladerf_source_0 = None
+        dev = 'driver=bladerf'
+        stream_args = ''
+        tune_args = ['']
+        settings = ['']
+
+        self.soapy_bladerf_source_0 = soapy.source(dev, "fc32", 1, '',
+                                  stream_args, tune_args, settings)
+        self.soapy_bladerf_source_0.set_sample_rate(0, samp_rate_blade)
+        self.soapy_bladerf_source_0.set_bandwidth(0, rxbw)
+        self.soapy_bladerf_source_0.set_frequency(0, freq)
+        self.soapy_bladerf_source_0.set_frequency_correction(0, 0)
+        self.soapy_bladerf_source_0.set_gain(0, min(max(30.0, -1.0), 60.0))
+        self.soapy_bladerf_sink_0 = None
+        dev = 'driver=bladerf'
+        stream_args = ''
+        tune_args = ['']
+        settings = ['']
+
+        self.soapy_bladerf_sink_0 = soapy.sink(dev, "fc32", 1, '',
+                                  stream_args, tune_args, settings)
+        self.soapy_bladerf_sink_0.set_sample_rate(0, samp_rate_blade)
+        self.soapy_bladerf_sink_0.set_bandwidth(0, 10000)
+        self.soapy_bladerf_sink_0.set_frequency(0, freq)
+        self.soapy_bladerf_sink_0.set_frequency_correction(0, 0)
+        self.soapy_bladerf_sink_0.set_gain(0, min(max(txgain, 17.0), 73.0))
+        self._rf_gain_sink_range = qtgui.Range(0, 60, 1, 10, 200)
+        self._rf_gain_sink_win = qtgui.RangeWidget(self._rf_gain_sink_range, self.set_rf_gain_sink, "RF gain sink", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_layout.addWidget(self._rf_gain_sink_win)
+        self._rf_gain_0_range = qtgui.Range(0, 60, 1, 60, 200)
+        self._rf_gain_0_win = qtgui.RangeWidget(self._rf_gain_0_range, self.set_rf_gain_0, "RF gain", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_layout.addWidget(self._rf_gain_0_win)
+        self._rf_gain_range = qtgui.Range(0, 60, 1, 60, 200)
+        self._rf_gain_win = qtgui.RangeWidget(self._rf_gain_range, self.set_rf_gain, "RF gain", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_layout.addWidget(self._rf_gain_win)
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_f(
             128, #size
             samp_rate, #samp_rate
             '', #name
-            1, #number of inputs
+            2, #number of inputs
             None # parent
         )
         self.qtgui_time_sink_x_0_0.set_update_time(0.10)
@@ -236,7 +225,7 @@ class Telelink(gr.top_block, Qt.QWidget):
 
         self.qtgui_time_sink_x_0_0.set_y_label('Amplitude', "")
 
-        self.qtgui_time_sink_x_0_0.enable_tags(False)
+        self.qtgui_time_sink_x_0_0.enable_tags(True)
         self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_AUTO, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
         self.qtgui_time_sink_x_0_0.enable_autoscale(False)
         self.qtgui_time_sink_x_0_0.enable_grid(False)
@@ -259,7 +248,7 @@ class Telelink(gr.top_block, Qt.QWidget):
             -1, -1, -1, -1, -1]
 
 
-        for i in range(1):
+        for i in range(2):
             if len(labels[i]) == 0:
                 self.qtgui_time_sink_x_0_0.set_line_label(i, "Data {0}".format(i))
             else:
@@ -276,6 +265,100 @@ class Telelink(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(1, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
+        self.qtgui_time_sink_x_0 = qtgui.time_sink_f(
+            500, #size
+            samp_rate, #samp_rate
+            '', #name
+            1, #number of inputs
+            None # parent
+        )
+        self.qtgui_time_sink_x_0.set_update_time(0.10)
+        self.qtgui_time_sink_x_0.set_y_axis(-1, 4)
+
+        self.qtgui_time_sink_x_0.set_y_label('Amplitude', "")
+
+        self.qtgui_time_sink_x_0.enable_tags(True)
+        self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
+        self.qtgui_time_sink_x_0.enable_autoscale(False)
+        self.qtgui_time_sink_x_0.enable_grid(False)
+        self.qtgui_time_sink_x_0.enable_axis_labels(True)
+        self.qtgui_time_sink_x_0.enable_control_panel(False)
+        self.qtgui_time_sink_x_0.enable_stem_plot(False)
+
+
+        labels = ['Symbols', '', '', '', '',
+            '', '', '', '', '']
+        widths = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+        colors = ['blue', 'red', 'green', 'black', 'cyan',
+            'magenta', 'yellow', 'dark red', 'dark green', 'dark blue']
+        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0]
+        styles = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+        markers = [-1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1]
+
+
+        for i in range(1):
+            if len(labels[i]) == 0:
+                self.qtgui_time_sink_x_0.set_line_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_time_sink_x_0.set_line_label(i, labels[i])
+            self.qtgui_time_sink_x_0.set_line_width(i, widths[i])
+            self.qtgui_time_sink_x_0.set_line_color(i, colors[i])
+            self.qtgui_time_sink_x_0.set_line_style(i, styles[i])
+            self.qtgui_time_sink_x_0.set_line_marker(i, markers[i])
+            self.qtgui_time_sink_x_0.set_line_alpha(i, alphas[i])
+
+        self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.qwidget(), Qt.QWidget)
+        self.received_grid_layout_1.addWidget(self._qtgui_time_sink_x_0_win, 0, 0, 1, 1)
+        for r in range(0, 1):
+            self.received_grid_layout_1.setRowStretch(r, 1)
+        for c in range(0, 1):
+            self.received_grid_layout_1.setColumnStretch(c, 1)
+        self.qtgui_freq_sink_x_1 = qtgui.freq_sink_c(
+            1024, #size
+            window.WIN_BLACKMAN_hARRIS, #wintype
+            0, #fc
+            samp_rate, #bw
+            'RX-SPECTRUM', #name
+            1,
+            None # parent
+        )
+        self.qtgui_freq_sink_x_1.set_update_time(0.10)
+        self.qtgui_freq_sink_x_1.set_y_axis((-140), 10)
+        self.qtgui_freq_sink_x_1.set_y_label('Relative Gain', 'dB')
+        self.qtgui_freq_sink_x_1.set_trigger_mode(qtgui.TRIG_MODE_FREE, 0.0, 0, "")
+        self.qtgui_freq_sink_x_1.enable_autoscale(False)
+        self.qtgui_freq_sink_x_1.enable_grid(False)
+        self.qtgui_freq_sink_x_1.set_fft_average(1.0)
+        self.qtgui_freq_sink_x_1.enable_axis_labels(True)
+        self.qtgui_freq_sink_x_1.enable_control_panel(False)
+        self.qtgui_freq_sink_x_1.set_fft_window_normalized(False)
+
+
+
+        labels = ['', '', '', '', '',
+            '', '', '', '', '']
+        widths = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+        colors = ["blue", "red", "green", "black", "cyan",
+            "magenta", "yellow", "dark red", "dark green", "dark blue"]
+        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0]
+
+        for i in range(1):
+            if len(labels[i]) == 0:
+                self.qtgui_freq_sink_x_1.set_line_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_freq_sink_x_1.set_line_label(i, labels[i])
+            self.qtgui_freq_sink_x_1.set_line_width(i, widths[i])
+            self.qtgui_freq_sink_x_1.set_line_color(i, colors[i])
+            self.qtgui_freq_sink_x_1.set_line_alpha(i, alphas[i])
+
+        self._qtgui_freq_sink_x_1_win = sip.wrapinstance(self.qtgui_freq_sink_x_1.qwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._qtgui_freq_sink_x_1_win)
         self.qtgui_freq_sink_x_0 = qtgui.freq_sink_c(
             1024, #size
             window.WIN_BLACKMAN_hARRIS, #wintype
@@ -318,13 +401,51 @@ class Telelink(gr.top_block, Qt.QWidget):
 
         self._qtgui_freq_sink_x_0_win = sip.wrapinstance(self.qtgui_freq_sink_x_0.qwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_freq_sink_x_0_win)
-        self._phase_bw_range = qtgui.Range(0.0, 1.0, 0.01, 6.28/100.0, 200)
-        self._phase_bw_win = qtgui.RangeWidget(self._phase_bw_range, self.set_phase_bw, "Phase: Bandwidth", "slider", float, QtCore.Qt.Horizontal)
-        self.controls_grid_layout_1.addWidget(self._phase_bw_win, 0, 2, 1, 1)
+        self.qtgui_const_sink_x_0 = qtgui.const_sink_c(
+            1024, #size
+            "", #name
+            1, #number of inputs
+            None # parent
+        )
+        self.qtgui_const_sink_x_0.set_update_time(0.10)
+        self.qtgui_const_sink_x_0.set_y_axis((-2), 2)
+        self.qtgui_const_sink_x_0.set_x_axis((-2), 2)
+        self.qtgui_const_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, "")
+        self.qtgui_const_sink_x_0.enable_autoscale(False)
+        self.qtgui_const_sink_x_0.enable_grid(False)
+        self.qtgui_const_sink_x_0.enable_axis_labels(True)
+
+
+        labels = ['', '', '', '', '',
+            '', '', '', '', '']
+        widths = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+        colors = ["blue", "red", "red", "red", "red",
+            "red", "red", "red", "red", "red"]
+        styles = [0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0]
+        markers = [0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0]
+        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0]
+
+        for i in range(1):
+            if len(labels[i]) == 0:
+                self.qtgui_const_sink_x_0.set_line_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_const_sink_x_0.set_line_label(i, labels[i])
+            self.qtgui_const_sink_x_0.set_line_width(i, widths[i])
+            self.qtgui_const_sink_x_0.set_line_color(i, colors[i])
+            self.qtgui_const_sink_x_0.set_line_style(i, styles[i])
+            self.qtgui_const_sink_x_0.set_line_marker(i, markers[i])
+            self.qtgui_const_sink_x_0.set_line_alpha(i, alphas[i])
+
+        self._qtgui_const_sink_x_0_win = sip.wrapinstance(self.qtgui_const_sink_x_0.qwidget(), Qt.QWidget)
+        self.received_grid_layout_0.addWidget(self._qtgui_const_sink_x_0_win, 0, 0, 1, 1)
         for r in range(0, 1):
-            self.controls_grid_layout_1.setRowStretch(r, 1)
-        for c in range(2, 3):
-            self.controls_grid_layout_1.setColumnStretch(c, 1)
+            self.received_grid_layout_0.setRowStretch(r, 1)
+        for c in range(0, 1):
+            self.received_grid_layout_0.setColumnStretch(c, 1)
         self._noise_volt_range = qtgui.Range(0, 1, 0.01, 0.0001, 200)
         self._noise_volt_win = qtgui.RangeWidget(self._noise_volt_range, self.set_noise_volt, "Noise Voltage", "counter_slider", float, QtCore.Qt.Horizontal)
         self.controls_grid_layout_0.addWidget(self._noise_volt_win, 0, 0, 1, 1)
@@ -343,6 +464,7 @@ class Telelink(gr.top_block, Qt.QWidget):
         for c in range(1, 2):
             self.controls_grid_layout_0.setColumnStretch(c, 1)
         self.fec_extended_tagged_encoder_0_1 = fec.extended_tagged_encoder(encoder_obj_list=cc_enc, puncpat='11', lentagname="packet_len", mtu=MTU)
+        self.fec_extended_tagged_decoder_2 = self.fec_extended_tagged_decoder_2 = fec_extended_tagged_decoder_2 = fec.extended_tagged_decoder(decoder_obj_list=cc_dec, ann=None, puncpat='11', integration_period=10000, lentagname="packet_len", mtu=MTU)
         self._eq_gain_range = qtgui.Range(0.0, 0.1, 0.001, 0.01, 200)
         self._eq_gain_win = qtgui.RangeWidget(self._eq_gain_range, self.set_eq_gain, "Equalizer: rate", "slider", float, QtCore.Qt.Horizontal)
         self.controls_grid_layout_1.addWidget(self._eq_gain_win, 0, 1, 1, 1)
@@ -350,7 +472,26 @@ class Telelink(gr.top_block, Qt.QWidget):
             self.controls_grid_layout_1.setRowStretch(r, 1)
         for c in range(1, 2):
             self.controls_grid_layout_1.setColumnStretch(c, 1)
+        self.digital_symbol_sync_xx_0 = digital.symbol_sync_cc(
+            digital.TED_SIGNAL_TIMES_SLOPE_ML,
+            sps,
+            phase_bw,
+            1.0,
+            1.0,
+            1.5,
+            4,
+            digital.constellation_bpsk().base(),
+            digital.IR_PFB_MF,
+            32,
+            rrc_taps)
         self.digital_protocol_formatter_bb_0 = digital.protocol_formatter_bb(hdr_format, "packet_len")
+        self.digital_map_bb_0_0 = digital.map_bb([-1, 1])
+        self.digital_map_bb_0 = digital.map_bb([0,1,2,3])
+        self.digital_linear_equalizer_0_0 = digital.linear_equalizer(15, 4, variable_adaptive_algorithm_0, True, [ ], 'corr_est')
+        self.digital_diff_decoder_bb_0 = digital.diff_decoder_bb(4, digital.DIFF_DIFFERENTIAL)
+        self.digital_costas_loop_cc_0 = digital.costas_loop_cc(phase_bw, arity, False)
+        self.digital_correlate_access_code_xx_ts_0 = digital.correlate_access_code_bb_ts('11100001010110101110100010010011',
+          2, "packet_len")
         self.digital_constellation_modulator_0 = digital.generic_mod(
             constellation=qpsk,
             differential=True,
@@ -360,32 +501,39 @@ class Telelink(gr.top_block, Qt.QWidget):
             verbose=False,
             log=False,
             truncate=False)
-        self._delay_range = qtgui.Range(0, 200, 1, 42, 200)
-        self._delay_win = qtgui.RangeWidget(self._delay_range, self.set_delay, "Delay", "counter_slider", float, QtCore.Qt.Horizontal)
-        self.top_grid_layout.addWidget(self._delay_win, 1, 0, 1, 1)
-        for r in range(1, 2):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 1):
-            self.top_grid_layout.setColumnStretch(c, 1)
+        self.digital_constellation_decoder_cb_0 = digital.constellation_decoder_cb(qpsk)
         self.blocks_unpack_k_bits_bb_0_0 = blocks.unpack_k_bits_bb(8)
+        self.blocks_unpack_k_bits_bb_0 = blocks.unpack_k_bits_bb(2)
         self.blocks_throttle2_1 = blocks.throttle( gr.sizeof_char*1, samp_rate, True, 0 if "auto" == "auto" else max( int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1) )
         self.blocks_throttle2_0_0 = blocks.throttle( gr.sizeof_char*1, spr, True, 0 if "auto" == "auto" else max( int(float(0.1) * spr) if "auto" == "time" else int(0.1), 1) )
         self.blocks_tagged_stream_mux_0 = blocks.tagged_stream_mux(gr.sizeof_char*1, "packet_len", 0)
         self.blocks_stream_to_tagged_stream_0 = blocks.stream_to_tagged_stream(gr.sizeof_char, 1, 8, "packet_len")
         self.blocks_repack_bits_bb_0_0_0 = blocks.repack_bits_bb(1, 8, 'packet_len', False, gr.GR_MSB_FIRST)
         self.blocks_repack_bits_bb_0_0 = blocks.repack_bits_bb(8, 1, 'packet_len', False, gr.GR_MSB_FIRST)
+        self.blocks_repack_bits_bb_0 = blocks.repack_bits_bb(1, 8, '', True, gr.GR_MSB_FIRST)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(0.8)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, './tx.tmp', False, 0, 0)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, 'D:\\Documents\\ecg_signal.csv', False, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, 'rx.tmp', False)
+        self.blocks_file_sink_0.set_unbuffered(False)
+        self.blocks_delay_0 = blocks.delay(gr.sizeof_float*1, delay)
+        self.blocks_char_to_float_1_1 = blocks.char_to_float(1, 1)
         self.blocks_char_to_float_0_0_0 = blocks.char_to_float(1, 1)
+        self.blocks_char_to_float_0_0 = blocks.char_to_float(1, 1)
+        self.blocks_char_to_float_0 = blocks.char_to_float(1, 1)
 
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_char_to_float_0_0_0, 0), (self.qtgui_time_sink_x_0_0, 0))
+        self.connect((self.blocks_char_to_float_0, 0), (self.qtgui_time_sink_x_0, 0))
+        self.connect((self.blocks_char_to_float_0_0, 0), (self.qtgui_time_sink_x_0_0, 0))
+        self.connect((self.blocks_char_to_float_0_0_0, 0), (self.blocks_delay_0, 0))
+        self.connect((self.blocks_char_to_float_1_1, 0), (self.fec_extended_tagged_decoder_2, 0))
+        self.connect((self.blocks_delay_0, 0), (self.qtgui_time_sink_x_0_0, 1))
         self.connect((self.blocks_file_source_0, 0), (self.blocks_throttle2_0_0, 0))
         self.connect((self.blocks_multiply_const_vxx_0, 0), (self.soapy_bladerf_sink_0, 0))
+        self.connect((self.blocks_repack_bits_bb_0, 0), (self.blocks_file_sink_0, 0))
         self.connect((self.blocks_repack_bits_bb_0_0, 0), (self.fec_extended_tagged_encoder_0_1, 0))
         self.connect((self.blocks_repack_bits_bb_0_0_0, 0), (self.blocks_tagged_stream_mux_0, 1))
         self.connect((self.blocks_repack_bits_bb_0_0_0, 0), (self.digital_protocol_formatter_bb_0, 0))
@@ -394,11 +542,26 @@ class Telelink(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_tagged_stream_mux_0, 0), (self.blocks_unpack_k_bits_bb_0_0, 0))
         self.connect((self.blocks_throttle2_0_0, 0), (self.blocks_stream_to_tagged_stream_0, 0))
         self.connect((self.blocks_throttle2_1, 0), (self.digital_constellation_modulator_0, 0))
+        self.connect((self.blocks_unpack_k_bits_bb_0, 0), (self.blocks_char_to_float_0_0, 0))
+        self.connect((self.blocks_unpack_k_bits_bb_0, 0), (self.digital_correlate_access_code_xx_ts_0, 0))
         self.connect((self.blocks_unpack_k_bits_bb_0_0, 0), (self.blocks_char_to_float_0_0_0, 0))
+        self.connect((self.digital_constellation_decoder_cb_0, 0), (self.blocks_char_to_float_0, 0))
+        self.connect((self.digital_constellation_decoder_cb_0, 0), (self.digital_diff_decoder_bb_0, 0))
         self.connect((self.digital_constellation_modulator_0, 0), (self.blocks_multiply_const_vxx_0, 0))
         self.connect((self.digital_constellation_modulator_0, 0), (self.qtgui_freq_sink_x_0, 0))
+        self.connect((self.digital_correlate_access_code_xx_ts_0, 0), (self.digital_map_bb_0_0, 0))
+        self.connect((self.digital_costas_loop_cc_0, 0), (self.digital_constellation_decoder_cb_0, 0))
+        self.connect((self.digital_costas_loop_cc_0, 0), (self.qtgui_const_sink_x_0, 0))
+        self.connect((self.digital_diff_decoder_bb_0, 0), (self.digital_map_bb_0, 0))
+        self.connect((self.digital_linear_equalizer_0_0, 0), (self.digital_costas_loop_cc_0, 0))
+        self.connect((self.digital_map_bb_0, 0), (self.blocks_unpack_k_bits_bb_0, 0))
+        self.connect((self.digital_map_bb_0_0, 0), (self.blocks_char_to_float_1_1, 0))
         self.connect((self.digital_protocol_formatter_bb_0, 0), (self.blocks_tagged_stream_mux_0, 0))
+        self.connect((self.digital_symbol_sync_xx_0, 0), (self.digital_linear_equalizer_0_0, 0))
+        self.connect((self.fec_extended_tagged_decoder_2, 0), (self.blocks_repack_bits_bb_0, 0))
         self.connect((self.fec_extended_tagged_encoder_0_1, 0), (self.blocks_repack_bits_bb_0_0_0, 0))
+        self.connect((self.soapy_bladerf_source_0, 0), (self.digital_symbol_sync_xx_0, 0))
+        self.connect((self.soapy_bladerf_source_0, 0), (self.qtgui_freq_sink_x_1, 0))
 
 
     def closeEvent(self, event):
@@ -421,12 +584,14 @@ class Telelink(gr.top_block, Qt.QWidget):
     def set_sps(self, sps):
         self.sps = sps
         self.set_rrc_taps(firdes.root_raised_cosine(self.nfilts, self.nfilts, 1.0/float(self.sps), 0.35, 11*self.sps*self.nfilts))
+        self.digital_symbol_sync_xx_0.set_sps(self.sps)
 
     def get_qpsk(self):
         return self.qpsk
 
     def set_qpsk(self, qpsk):
         self.qpsk = qpsk
+        self.digital_constellation_decoder_cb_0.set_constellation(self.qpsk)
 
     def get_polys(self):
         return self.polys
@@ -503,6 +668,7 @@ class Telelink(gr.top_block, Qt.QWidget):
     def set_samp_rate_blade(self, samp_rate_blade):
         self.samp_rate_blade = samp_rate_blade
         self.soapy_bladerf_sink_0.set_sample_rate(0, self.samp_rate_blade)
+        self.soapy_bladerf_source_0.set_sample_rate(0, self.samp_rate_blade)
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -511,6 +677,8 @@ class Telelink(gr.top_block, Qt.QWidget):
         self.samp_rate = samp_rate
         self.blocks_throttle2_1.set_sample_rate(self.samp_rate)
         self.qtgui_freq_sink_x_0.set_frequency_range(0, self.samp_rate)
+        self.qtgui_freq_sink_x_1.set_frequency_range(0, self.samp_rate)
+        self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
         self.qtgui_time_sink_x_0_0.set_samp_rate(self.samp_rate)
 
     def get_rxbw(self):
@@ -518,6 +686,7 @@ class Telelink(gr.top_block, Qt.QWidget):
 
     def set_rxbw(self, rxbw):
         self.rxbw = rxbw
+        self.soapy_bladerf_source_0.set_bandwidth(0, self.rxbw)
 
     def get_rx_freq_(self):
         return self.rx_freq_
@@ -554,6 +723,8 @@ class Telelink(gr.top_block, Qt.QWidget):
 
     def set_phase_bw(self, phase_bw):
         self.phase_bw = phase_bw
+        self.digital_costas_loop_cc_0.set_loop_bandwidth(self.phase_bw)
+        self.digital_symbol_sync_xx_0.set_loop_bandwidth(self.phase_bw)
 
     def get_noise_volt(self):
         return self.noise_volt
@@ -572,6 +743,7 @@ class Telelink(gr.top_block, Qt.QWidget):
 
     def set_hdr_format(self, hdr_format):
         self.hdr_format = hdr_format
+        self.digital_protocol_formatter_bb_0.set_header_format(self.hdr_format)
 
     def get_freq_offset(self):
         return self.freq_offset
@@ -585,6 +757,7 @@ class Telelink(gr.top_block, Qt.QWidget):
     def set_freq(self, freq):
         self.freq = freq
         self.soapy_bladerf_sink_0.set_frequency(0, self.freq)
+        self.soapy_bladerf_source_0.set_frequency(0, self.freq)
 
     def get_excess_bw(self):
         return self.excess_bw
@@ -603,6 +776,7 @@ class Telelink(gr.top_block, Qt.QWidget):
 
     def set_delay(self, delay):
         self.delay = delay
+        self.blocks_delay_0.set_dly(int(self.delay))
 
     def get_cc_enc(self):
         return self.cc_enc
@@ -661,10 +835,4 @@ def main(top_block_cls=Telelink, options=None):
     qapp.exec_()
 
 if __name__ == '__main__':
-    # # Encrypt the file
-    # encrypt_file(input_file, predefined_key)
-
-    #Adds the preamble
-    add_preamble()
-
     main()

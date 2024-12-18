@@ -4,7 +4,6 @@ import os
 
 
 input_file = os.environ['INPUT_FILE'] # Define input file path
-output_file = os.environ['OUTPUT_FILE']  # Define output file path
 tmp_file = "/input.tmp"  # Temporary file path
 
 def add_preamble():

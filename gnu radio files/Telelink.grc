@@ -693,7 +693,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: ./rx.tmp
+    file: rx.tmp
     type: byte
     unbuffered: 'False'
     vlen: '1'
@@ -711,7 +711,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: ./tx.tmp
+    file: D:\Documents\ecg_signal.csv
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -781,7 +781,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [672, 148.0]
+    coordinate: [720, 148.0]
     rotation: 0
     state: enabled
 - name: blocks_repack_bits_bb_0_0_0
@@ -801,7 +801,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1208, 156.0]
+    coordinate: [1216, 148.0]
     rotation: 0
     state: enabled
 - name: blocks_stream_to_tagged_stream_0
@@ -820,7 +820,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [384, 148.0]
+    coordinate: [456, 148.0]
     rotation: 0
     state: enabled
 - name: blocks_tagged_stream_mux_0
@@ -882,7 +882,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [216, 148.0]
+    coordinate: [264, 148.0]
     rotation: 0
     state: enabled
 - name: blocks_throttle2_1
@@ -1221,7 +1221,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [896, 132.0]
+    coordinate: [944, 132.0]
     rotation: 0
     state: enabled
 - name: qtgui_const_sink_x_0
@@ -1714,7 +1714,7 @@ blocks:
     bandwidth: '10000'
     center_freq: freq
     comment: ''
-    dev_args: bladerf=0
+    dev_args: ''
     freq_correction: '0'
     gain: txgain
     samp_rate: samp_rate_blade
@@ -1734,7 +1734,7 @@ blocks:
     bandwidth: rxbw
     center_freq: freq
     comment: ''
-    dev_args: bladerf=0
+    dev_args: ''
     freq_correction: '0'
     gain: '30.0'
     maxoutbuf: '0'
@@ -1860,4 +1860,4 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.9.2
+  grc_version: 3.10.10.0
