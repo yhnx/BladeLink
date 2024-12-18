@@ -23,7 +23,7 @@ class TransmittingApp(ctk.CTk):
             print(f"Error setting icon: {e}")
 
         # Configure window
-        self.title("TeleLink Transmitter")
+        self.title("TeleLink Communications")
         self.geometry("800x600")
         self.configure(fg_color="#FFFFFF")
 
@@ -31,28 +31,48 @@ class TransmittingApp(ctk.CTk):
         self.landing_frame = ctk.CTkFrame(self, fg_color="white")
         self.landing_frame.pack(expand=True, fill="both")
 
-        # Title Label
-        title_label = ctk.CTkLabel(
-            self.landing_frame, 
-            text="TeleLink Transmitter", 
-            font=("Roboto-bold", 24, "bold"),
-            text_color="black"
-        )
-        title_label.pack(pady=(240,0))
+        try:
+            image_path = r"./bladeLINK.png"  # Ensure this path is correct
+            title_image = Image.open(image_path)
+            title_image = title_image.resize((300, 140), Image.LANCZOS)  # Resize if needed
+            title_photo = ctk.CTkImage(light_image=title_image, size=(300, 140))  # Convert to CTkImage
+            title_label = ctk.CTkLabel(
+                self.landing_frame, 
+                image=title_photo, 
+                text=""
+            )
+            title_label.pack(pady=(120, 0))
+        except Exception as e:
+            print(f"Error loading title image: {e}")
+
 
         # Start Button
-        start_button = ctk.CTkButton(
+        transmit_button = ctk.CTkButton(
             self.landing_frame, 
-            text="Start", 
+            text="Transmit", 
             font=("Roboto", 18),
             command=self.open_file_page,
-            fg_color="#2C3E50",
-            hover_color="#34495E",
+            fg_color="#2ECC71",  # Emerald
+            hover_color="#27AE60",  # Green Sea
             text_color="white",
             width=200,  # Adjust the width as needed
             height=50  
         )
-        start_button.pack(pady=40)
+        transmit_button.pack(pady=(40,20))
+
+        # Recieve Button
+        recieve_button = ctk.CTkButton(
+            self.landing_frame, 
+            text="Recieve", 
+            font=("Roboto", 18),
+            #command=self.open_recieve_page,
+            fg_color="#3498DB",  # Peter River
+            hover_color="#2980B9",  # Belize Hole
+            text_color="white",
+            width=200,  # Adjust the width as needed
+            height=50  
+        )
+        recieve_button.pack(pady=(20,0))
 
         # Logo Frame (bottom right)
         logo_frame = ctk.CTkFrame(self.landing_frame, fg_color="white")
@@ -234,7 +254,7 @@ class TransmittingApp(ctk.CTk):
                     
                     with open(tmp_file, 'wb') as output:
                         file_name = os.path.basename(self.selected_file_path)
-                        output.write(preamble + detect_sequence + file_name + detect_sequence + ciphertext + detect_sequence + preamble)
+                        output.write(preamble + detect_sequence + file_name + detect_sequence + plaintext + detect_sequence + preamble)
 
                         #Encryption
                         def pad(data):
