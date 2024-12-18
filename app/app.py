@@ -14,7 +14,7 @@ class TransmittingApp(ctk.CTk):
         # Try to set icon using PIL Image
         try:
             # Load the icon
-            icon_path = r"./signal-tower.ico"  # Example location
+            icon_path = r"./transmitter/src/signal-tower.ico"  # Example location
             try:
                 self.iconbitmap(icon_path)  # Use for .ico files
             except tk.TclError:
@@ -32,7 +32,7 @@ class TransmittingApp(ctk.CTk):
         self.landing_frame.pack(expand=True, fill="both")
 
         try:
-            image_path = r"./bladeLINK.png"  # Ensure this path is correct
+            image_path = r"./transmitter/src/bladeLINK.png"  # Ensure this path is correct
             title_image = Image.open(image_path)
             title_image = title_image.resize((300, 140), Image.LANCZOS)  # Resize if needed
             title_photo = ctk.CTkImage(light_image=title_image, size=(300, 140))  # Convert to CTkImage
@@ -80,7 +80,7 @@ class TransmittingApp(ctk.CTk):
 
         # Load and display logo using PIL Image and ImageTk.PhotoImage
         try:
-            image_path = r"./telelink.png"
+            image_path = r"./transmitter/src/telelink.png"
             logo_image = Image.open(image_path)  # Use PIL to open the image
             logo_image = logo_image.resize((150, 150), Image.LANCZOS)  # Resize if needed
             logo_photo = ctk.CTkImage(light_image=logo_image, size=(150, 150))  # Convert to CTkImage
@@ -281,7 +281,7 @@ class TransmittingApp(ctk.CTk):
 
                 # Start Telelink.py as a subprocess
                 process = subprocess.Popen(
-                    ['python3', './Telelink_transmitter.py'],
+                    ['python3', './transmitter/Telelink_transmitter.py'],
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                     text=True
