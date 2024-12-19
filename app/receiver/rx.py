@@ -15,12 +15,12 @@ def rx():
             start= content.find(b'sts')
             if start!= -1:
                     print('file recieving')
-                    end_name= content.rfind(b'|||')
+                    end_name= content.find(b'|||')
                     name=content[start+3:end_name]
                     print(name)
                     end_index = content.rfind(b'end')
                     if end_index != -1:
-                        start= content.find(b'|||')
+                        start= end_name
                         content = content[start+3:end_index]
                         path='./'+name.decode()
                         with open(path,'wb') as output:

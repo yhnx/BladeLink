@@ -8,6 +8,8 @@ from PIL import Image, ImageTk  # Import Image and ImageTk
 from Crypto.Cipher import AES
 import time
 
+from sympy import true
+
 class TransmittingApp(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -249,42 +251,14 @@ class TransmittingApp(ctk.CTk):
         
         # Start receive process in a thread
         threading.Thread(target=self.start_receive_process, daemon=True).start()
-
+        threading.Thread(target=self.file_decoder,daemon=True).start()
+        
     def start_receive_process(self):
         """Run Telelink receiver script and handle results"""
-        def open_file(file_path):
-                subprocess.run(["xdg-open", file_path])
 
-        def rx():
-            global content
-            
-            while(True):
-                with open(self.path+'/rx.tmp', 'rb') as file:
-
-                    content = file.read()
-                    if(len(content)>10):print('conncted')
-                    time.sleep(1)
-
-                    start= content.find(b'sts')
-                    if start!= -1:
-                            print('file recieving')
-                            end_name= content.rfind(b'|||')
-                            name=content[start+3:end_name]
-                            print(name)
-                            end_index = content.rfind(b'end')
-                            if end_index != -1:
-                                start= content.find(b'|||')
-                                content = content[start+3:end_index]
-                                path='./'+name.decode()
-                                with open(path,'wb') as output:
-                                    output.write(content)
-                                    with open(self.path+'/rx.tmp','wb') as output:pass
-                                open_file(path)
-                                
-       
-       
+                            
         try:
-            threading.Thread(target=rx(), daemon=True).start()
+            #threading.Thread(target=rx(), daemon=True).start()
             # Run Telelink_receiver.py as a subprocess
             process = subprocess.Popen(
                 ['python3', self.path+'/receiver/Telelink_receiver.py'],
@@ -306,7 +280,36 @@ class TransmittingApp(ctk.CTk):
         except Exception as e:
             # Handle any unexpected errors
             self.after(0, self.handle_receive_error, str(e))
+    
+    def file_decoder(self):
+            global content
 
+            def open_file(file_path):
+                subprocess.run(["xdg-open", file_path])
+            print("file decoder started")
+            while(True):
+                with open('./rx.tmp', 'rb') as file:
+
+                    content = file.read()
+                    if(len(content)>10):print('conncted')
+                    time.sleep(1)
+
+                    start= content.find(b'sts')
+                    if start!= -1:
+                            print('file recieving')
+                            end_name= content.rfind(b'|||')
+                            name=content[start+3:end_name]
+                            print(name)
+                            end_index = content.rfind(b'end')
+                            if end_index != -1:
+                                start= content.find(b'|||')
+                                content = content[start+3:end_index]
+                                path='./'+name.decode()
+                                with open(path,'wb') as output:
+                                    output.write(content)
+                                    with open('./rx.tmp','wb') as output:pass
+                                open_file(path)
+        
     def handle_receive_success(self, output):
         """Handle successful file reception"""
         # Try to extract the received file name
@@ -460,7 +463,7 @@ class TransmittingApp(ctk.CTk):
 
                 # Start Telelink.py as a subprocess
                 process = subprocess.Popen(
-                    ['python3', './transmitter/Telelink_transmitter.py'],
+                    ['python3', self.path+'./transmitter/Telelink_transmitter.py'],
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                     text=True
