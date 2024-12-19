@@ -27,8 +27,9 @@ def rx():
                              output.write(content)
                              with open('./rx.tmp','wb') as output:pass
                         open_file(path)
-                        break
+                    
 
 
 def open_file(file_path):
         subprocess.run(["xdg-open", file_path])
+rx()

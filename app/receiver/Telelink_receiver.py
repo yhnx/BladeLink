@@ -32,7 +32,7 @@ import sip
 
 
 
-class Telelink(gr.top_block, Qt.QWidget):
+class Telelink_receiver(gr.top_block, Qt.QWidget):
 
     def __init__(self, MTU=1500):
         gr.top_block.__init__(self, "Telelink_cdp", catch_exceptions=True)
@@ -55,7 +55,7 @@ class Telelink(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "Telelink")
+        self.settings = Qt.QSettings("GNU Radio", "Telelink_receiver")
 
         try:
             geometry = self.settings.value("geometry")
@@ -178,11 +178,11 @@ class Telelink(gr.top_block, Qt.QWidget):
 
         self.soapy_bladerf_source_0 = soapy.source(dev, "fc32", 1, '',
                                   stream_args, tune_args, settings)
-        self.soapy_bladerf_source_0.set_sample_rate(0, samp_rate_blade)
+        self.soapy_bladerf_source_0.set_sample_rate(0, samp_rate_blade*2)
         self.soapy_bladerf_source_0.set_bandwidth(0, rxbw)
         self.soapy_bladerf_source_0.set_frequency(0, freq)
         self.soapy_bladerf_source_0.set_frequency_correction(0, 0)
-        self.soapy_bladerf_source_0.set_gain(0, min(max(30.0, -1.0), 60.0))
+        self.soapy_bladerf_source_0.set_gain(0, min(max(30, -1.0), 60.0))
         self._rf_gain_sink_range = qtgui.Range(0, 60, 1, 10, 200)
         self._rf_gain_sink_win = qtgui.RangeWidget(self._rf_gain_sink_range, self.set_rf_gain_sink, "RF gain sink", "counter_slider", float, QtCore.Qt.Horizontal)
         self.top_layout.addWidget(self._rf_gain_sink_win)
@@ -414,7 +414,7 @@ class Telelink(gr.top_block, Qt.QWidget):
 
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "Telelink")
+        self.settings = Qt.QSettings("GNU Radio", "Telelink_receiver")
         self.settings.setValue("geometry", self.saveGeometry())
         self.stop()
         self.wait()
@@ -514,7 +514,7 @@ class Telelink(gr.top_block, Qt.QWidget):
 
     def set_samp_rate_blade(self, samp_rate_blade):
         self.samp_rate_blade = samp_rate_blade
-        self.soapy_bladerf_source_0.set_sample_rate(0, self.samp_rate_blade)
+        self.soapy_bladerf_source_0.set_sample_rate(0, self.samp_rate_blade*2)
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -647,7 +647,7 @@ def argument_parser():
     return parser
 
 
-def main(top_block_cls=Telelink, options=None):
+def main(top_block_cls=Telelink_receiver, options=None):
     if options is None:
         options = argument_parser().parse_args()
 
