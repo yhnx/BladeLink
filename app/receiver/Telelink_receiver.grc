@@ -11,7 +11,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: Telelink
+    id: Telelink_receiver
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -426,7 +426,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2704, 188.0]
+    coordinate: [2704, 204.0]
     rotation: 0
     state: enabled
 - name: samp_rate_blade
@@ -438,7 +438,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2696, 116.0]
+    coordinate: [2696, 76.0]
     rotation: 0
     state: enabled
 - name: spr
@@ -528,7 +528,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2768, 124.0]
+    coordinate: [2784, 148.0]
     rotation: 0
     state: enabled
 - name: txbw
@@ -540,7 +540,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2792, 212.0]
+    coordinate: [2800, 212.0]
     rotation: 0
     state: enabled
 - name: txgain
@@ -596,7 +596,7 @@ blocks:
     bus_structure: null
     coordinate: [32, 44.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: MTU
   id: parameter
   parameters:
@@ -647,7 +647,7 @@ blocks:
     bus_structure: null
     coordinate: [928, 860.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: blocks_char_to_float_0_0_0
   id: blocks_char_to_float
   parameters:
@@ -664,7 +664,7 @@ blocks:
     bus_structure: null
     coordinate: [464, 1012.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_char_to_float_1
   id: blocks_char_to_float
   parameters:
@@ -681,7 +681,7 @@ blocks:
     bus_structure: null
     coordinate: [912, 36.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_char_to_float_1_1
   id: blocks_char_to_float
   parameters:
@@ -718,7 +718,7 @@ blocks:
     bus_structure: null
     coordinate: [688, 1012.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_file_sink_0
   id: blocks_file_sink
   parameters:
@@ -734,7 +734,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1648, 1192.0]
+    coordinate: [1840, 1192.0]
     rotation: 0
     state: enabled
 - name: blocks_file_source_0
@@ -744,6 +744,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
+    file: /home/praveen/video1.ts
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -757,7 +758,7 @@ blocks:
     bus_structure: null
     coordinate: [16, 116.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_multiply_const_vxx_0
   id: blocks_multiply_const_vxx
   parameters:
@@ -775,7 +776,7 @@ blocks:
     bus_structure: null
     coordinate: [740.0, 408]
     rotation: 90
-    state: enabled
+    state: disabled
 - name: blocks_repack_bits_bb_0
   id: blocks_repack_bits_bb
   parameters:
@@ -815,7 +816,7 @@ blocks:
     bus_structure: null
     coordinate: [720, 148.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_repack_bits_bb_0_0_0
   id: blocks_repack_bits_bb
   parameters:
@@ -835,7 +836,7 @@ blocks:
     bus_structure: null
     coordinate: [1304, 148.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_stream_to_tagged_stream_0
   id: blocks_stream_to_tagged_stream
   parameters:
@@ -854,7 +855,7 @@ blocks:
     bus_structure: null
     coordinate: [456, 148.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_tagged_stream_mux_0
   id: blocks_tagged_stream_mux
   parameters:
@@ -874,7 +875,7 @@ blocks:
     bus_structure: null
     coordinate: [1752, 148.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_throttle2_0
   id: blocks_throttle2
   parameters:
@@ -895,7 +896,7 @@ blocks:
     bus_structure: null
     coordinate: [880, 540.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_throttle2_0_0
   id: blocks_throttle2
   parameters:
@@ -916,7 +917,7 @@ blocks:
     bus_structure: null
     coordinate: [264, 148.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_throttle2_1
   id: blocks_throttle2
   parameters:
@@ -936,6 +937,27 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [248, 540.0]
+    rotation: 0
+    state: disabled
+- name: blocks_throttle2_2
+  id: blocks_throttle2
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    ignoretag: 'True'
+    limit: auto
+    maximum: '0.1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: samp_rate
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1608, 1204.0]
     rotation: 0
     state: enabled
 - name: blocks_unpack_k_bits_bb_0
@@ -969,7 +991,7 @@ blocks:
     bus_structure: null
     coordinate: [248, 1012.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: channels_channel_model_0
   id: channels_channel_model
   parameters:
@@ -990,7 +1012,7 @@ blocks:
     bus_structure: null
     coordinate: [1208, 496.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: controls
   id: qtgui_tab_widget
   parameters:
@@ -1063,7 +1085,7 @@ blocks:
     bus_structure: null
     coordinate: [504, 516.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_correlate_access_code_xx_ts_0
   id: digital_correlate_access_code_xx_ts
   parameters:
@@ -1188,7 +1210,7 @@ blocks:
     bus_structure: null
     coordinate: [1456, 44.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_symbol_sync_xx_0
   id: digital_symbol_sync_xx
   parameters:
@@ -1255,7 +1277,7 @@ blocks:
     bus_structure: null
     coordinate: [944, 132.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_const_sink_x_0
   id: qtgui_const_sink_x
   parameters:
@@ -1428,7 +1450,7 @@ blocks:
     bus_structure: null
     coordinate: [784, 676.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_freq_sink_x_1
   id: qtgui_freq_sink_x
   parameters:
@@ -1509,7 +1531,7 @@ blocks:
     bus_structure: null
     coordinate: [1520, 300.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_number_sink_0
   id: qtgui_number_sink
   parameters:
@@ -1572,7 +1594,7 @@ blocks:
     bus_structure: null
     coordinate: [1120, 4.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0
   id: qtgui_time_sink_x
   parameters:
@@ -1766,7 +1788,7 @@ blocks:
     bus_structure: null
     coordinate: [896, 976.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: received
   id: qtgui_tab_widget
   parameters:
@@ -1801,46 +1823,6 @@ blocks:
     coordinate: [3392, 292.0]
     rotation: 0
     state: enabled
-- name: snippet_0
-  id: snippet
-  parameters:
-    alias: ''
-    code: "# Function to remove both front and back preambles and sequence from file\n\
-      import time\nimport subprocess\ndef remove_preamble(file_path):\n    global\
-      \ content\n    \n    detect_sequence = b'sts'\n\n    #with open(file_path, 'rb')\
-      \ as file:\n        #content = file.read()\n\n    start_index = content.find(detect_sequence)\n\
-      \    if start_index != -1:\n        content = content[start_index + len(detect_sequence):]\n\
-      \n    end_index = content.rfind(detect_sequence)\n    if end_index != -1:\n\
-      \        content = content[:end_index]\n\ndef tag():\n     global content\n\
-      \     detected=False\n     typs=[b'mp3',b'jpeg',b'mp4']\n     \n     while(not(detected)):\n\
-      \        with open('./rx.tmp', 'rb') as file:\n            content = file.read()\n\
-      \        time.sleep(1) \n        for tag in typs:\n            position= content.rfind(tag)\n\
-      \            if position != -1:\n                remove_preamble('./rx.tmp')\n\
-      \                if(tag==b'jpeg'):\n                    with open(\"./out.jpg\"\
-      , 'wb') as file:\n                        file.write(content)\n            \
-      \            detected=True\n                        subprocess.run([\"open\"\
-      ,\"./out.jpg\"])\n                if(tag==b'mp3'):\n                    with\
-      \ open(\"./out.mp3\", 'wb') as file:\n                        file.write(content)\n\
-      \                        subprocess.run([\"open\",\"./out.mp3\"])\n        \
-      \                detected=True\n                if(tag==b'ts'):\n          \
-      \          with open(\"./out.ts\", 'wb') as file:\n                        file.write(content)\n\
-      \                        subprocess.run([\"open\",\"./out.ts\"])\n         \
-      \               detected=True\n                if(tag==b'mp4'):\n          \
-      \          with open(\"./out.mp4\", 'wb') as file:\n                       \
-      \ file.write(content)\n                        subprocess.run([\"open\",\"./out.mp4\"\
-      ])\n                        detected=True\n                    print(\"detected\"\
-      )\n\n\n# Remove both front and back preambles and sequence from the output.tmp\
-      \ file\ntag()"
-    comment: ''
-    priority: '0'
-    section: main_after_stop
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1096, 52.0]
-    rotation: 0
-    state: enabled
 - name: soapy_bladerf_sink_0
   id: soapy_bladerf_sink
   parameters:
@@ -1852,7 +1834,7 @@ blocks:
     dev_args: ''
     freq_correction: '0'
     gain: txgain
-    samp_rate: samp_rate_blade*2
+    samp_rate: samp_rate_blade
     type: fc32
   states:
     bus_sink: false
@@ -1860,7 +1842,7 @@ blocks:
     bus_structure: null
     coordinate: [904, 320.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: soapy_bladerf_source_0
   id: soapy_bladerf_source
   parameters:
@@ -1871,7 +1853,7 @@ blocks:
     comment: ''
     dev_args: ''
     freq_correction: '0'
-    gain: '30.0'
+    gain: '30'
     maxoutbuf: '0'
     minoutbuf: '0'
     samp_rate: samp_rate_blade*2
@@ -1882,7 +1864,7 @@ blocks:
     bus_structure: null
     coordinate: [1232, 312.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: virtual_sink_0_0
   id: virtual_sink
   parameters:
@@ -1895,7 +1877,7 @@ blocks:
     bus_structure: null
     coordinate: [2064, 148.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: virtual_sink_1
   id: virtual_sink
   parameters:
@@ -1921,7 +1903,7 @@ blocks:
     bus_structure: null
     coordinate: [8, 548.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: virtual_source_1
   id: virtual_source
   parameters:
@@ -1934,7 +1916,7 @@ blocks:
     bus_structure: null
     coordinate: [8, 1012.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: virtual_source_2
   id: virtual_source
   parameters:
@@ -1958,7 +1940,7 @@ connections:
 - [blocks_delay_0, '0', qtgui_time_sink_x_0_0, '1']
 - [blocks_file_source_0, '0', blocks_throttle2_0_0, '0']
 - [blocks_multiply_const_vxx_0, '0', soapy_bladerf_sink_0, '0']
-- [blocks_repack_bits_bb_0, '0', blocks_file_sink_0, '0']
+- [blocks_repack_bits_bb_0, '0', blocks_throttle2_2, '0']
 - [blocks_repack_bits_bb_0_0, '0', blocks_char_to_float_1, '0']
 - [blocks_repack_bits_bb_0_0, '0', fec_extended_tagged_encoder_0_1, '0']
 - [blocks_repack_bits_bb_0_0_0, '0', blocks_tagged_stream_mux_0, '1']
@@ -1968,6 +1950,7 @@ connections:
 - [blocks_throttle2_0, '0', channels_channel_model_0, '0']
 - [blocks_throttle2_0_0, '0', blocks_stream_to_tagged_stream_0, '0']
 - [blocks_throttle2_1, '0', digital_constellation_modulator_0, '0']
+- [blocks_throttle2_2, '0', blocks_file_sink_0, '0']
 - [blocks_unpack_k_bits_bb_0, '0', blocks_char_to_float_0_0, '0']
 - [blocks_unpack_k_bits_bb_0, '0', virtual_sink_1, '0']
 - [blocks_unpack_k_bits_bb_0_0, '0', blocks_char_to_float_0_0_0, '0']
