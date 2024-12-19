@@ -253,6 +253,14 @@ class TransmittingApp(ctk.CTk):
         try:
             # Run Telelink_receiver.py as a subprocess
             process = subprocess.Popen(
+                ['python3', './receiver/Trx.py','rx.tmp'],
+                stdout1=subprocess.PIPE,
+                stderr1=subprocess.PIPE,
+                text=True
+            )
+
+            # Run Telelink_receiver.py as a subprocess
+            process = subprocess.Popen(
                 ['python3', './receiver/Telelink_receiver.py'],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -398,7 +406,8 @@ class TransmittingApp(ctk.CTk):
                     
                     with open(tmp_file, 'wb') as output:
                         file_name = os.path.basename(self.selected_file_path)
-                        output.write(preamble + detect_sequence+file_name.encode()+b'||'+ plaintext + detect_sequence + preamble)
+                        output.write(preamble + detect_sequence+file_name.encode()+b'|||'+ plaintext + b'end' + preamble)
+                        print("file created")
 
                         #Encryption
                         def pad(data):

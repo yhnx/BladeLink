@@ -163,7 +163,7 @@ blocks:
     bus_structure: null
     coordinate: [3400, 132.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: freq_offset
   id: variable_qtgui_range
   parameters:
@@ -219,7 +219,7 @@ blocks:
     bus_structure: null
     coordinate: [3416, 8.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: k
   id: variable
   parameters:
@@ -338,7 +338,7 @@ blocks:
     bus_structure: null
     coordinate: [3312, 248.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: rf_gain_0
   id: variable_qtgui_range
   parameters:
@@ -359,7 +359,7 @@ blocks:
     bus_structure: null
     coordinate: [3312, 120.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: rf_gain_sink
   id: variable_qtgui_range
   parameters:
@@ -380,7 +380,7 @@ blocks:
     bus_structure: null
     coordinate: [3240, 112.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: rrc_taps
   id: variable
   parameters:
@@ -581,6 +581,22 @@ blocks:
     coordinate: [3064, 460.0]
     rotation: 0
     state: enabled
+- name: variable_qtgui_entry_0
+  id: variable_qtgui_entry
+  parameters:
+    comment: ''
+    entry_signal: editingFinished
+    gui_hint: ''
+    label: ''
+    type: string
+    value: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 44.0]
+    rotation: 0
+    state: enabled
 - name: MTU
   id: parameter
   parameters:
@@ -596,6 +612,24 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [2872, 164.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_0
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1128, 20.0]
     rotation: 0
     state: enabled
 - name: blocks_char_to_float_0
@@ -631,7 +665,7 @@ blocks:
     bus_structure: null
     coordinate: [928, 860.0]
     rotation: 180
-    state: disabled
+    state: enabled
 - name: blocks_char_to_float_0_0_0
   id: blocks_char_to_float
   parameters:
@@ -648,7 +682,24 @@ blocks:
     bus_structure: null
     coordinate: [464, 1012.0]
     rotation: 0
-    state: disabled
+    state: enabled
+- name: blocks_char_to_float_1
+  id: blocks_char_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '1'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [912, 36.0]
+    rotation: 0
+    state: enabled
 - name: blocks_char_to_float_1_1
   id: blocks_char_to_float
   parameters:
@@ -685,7 +736,7 @@ blocks:
     bus_structure: null
     coordinate: [688, 1012.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_file_sink_0
   id: blocks_file_sink
   parameters:
@@ -711,7 +762,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: D:\Documents\ecg_signal.csv
+    file: /home/praveen/video1.ts
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -725,7 +776,26 @@ blocks:
     bus_structure: null
     coordinate: [16, 116.0]
     rotation: 0
-    state: disabled
+    state: enabled
+- name: blocks_interleave_0
+  id: blocks_interleave
+  parameters:
+    affinity: ''
+    alias: ''
+    blocksize: '1'
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_streams: '2'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1744, 292.0]
+    rotation: 0
+    state: enabled
 - name: blocks_multiply_const_vxx_0
   id: blocks_multiply_const_vxx
   parameters:
@@ -743,7 +813,7 @@ blocks:
     bus_structure: null
     coordinate: [740.0, 408]
     rotation: 90
-    state: disabled
+    state: enabled
 - name: blocks_repack_bits_bb_0
   id: blocks_repack_bits_bb
   parameters:
@@ -783,7 +853,7 @@ blocks:
     bus_structure: null
     coordinate: [720, 148.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_repack_bits_bb_0_0_0
   id: blocks_repack_bits_bb
   parameters:
@@ -803,7 +873,7 @@ blocks:
     bus_structure: null
     coordinate: [1216, 148.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_stream_to_tagged_stream_0
   id: blocks_stream_to_tagged_stream
   parameters:
@@ -822,7 +892,7 @@ blocks:
     bus_structure: null
     coordinate: [456, 148.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_tagged_stream_mux_0
   id: blocks_tagged_stream_mux
   parameters:
@@ -842,7 +912,7 @@ blocks:
     bus_structure: null
     coordinate: [1752, 148.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_throttle2_0
   id: blocks_throttle2
   parameters:
@@ -884,7 +954,7 @@ blocks:
     bus_structure: null
     coordinate: [264, 148.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_throttle2_1
   id: blocks_throttle2
   parameters:
@@ -905,7 +975,7 @@ blocks:
     bus_structure: null
     coordinate: [248, 540.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_unpack_k_bits_bb_0
   id: blocks_unpack_k_bits_bb
   parameters:
@@ -937,7 +1007,7 @@ blocks:
     bus_structure: null
     coordinate: [248, 1012.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: channels_channel_model_0
   id: channels_channel_model
   parameters:
@@ -1031,7 +1101,7 @@ blocks:
     bus_structure: null
     coordinate: [504, 516.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: digital_correlate_access_code_xx_ts_0
   id: digital_correlate_access_code_xx_ts
   parameters:
@@ -1156,7 +1226,7 @@ blocks:
     bus_structure: null
     coordinate: [1456, 44.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: digital_symbol_sync_xx_0
   id: digital_symbol_sync_xx
   parameters:
@@ -1223,7 +1293,7 @@ blocks:
     bus_structure: null
     coordinate: [944, 132.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: qtgui_const_sink_x_0
   id: qtgui_const_sink_x
   parameters:
@@ -1396,7 +1466,7 @@ blocks:
     bus_structure: null
     coordinate: [784, 676.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: qtgui_freq_sink_x_1
   id: qtgui_freq_sink_x
   parameters:
@@ -1476,6 +1546,69 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [1520, 300.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_number_sink_0
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    autoscale: 'False'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '1'
+    min: '-1'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1272, 4.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0
@@ -1671,7 +1804,7 @@ blocks:
     bus_structure: null
     coordinate: [896, 976.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: received
   id: qtgui_tab_widget
   parameters:
@@ -1725,7 +1858,7 @@ blocks:
     bus_structure: null
     coordinate: [904, 320.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: soapy_bladerf_source_0
   id: soapy_bladerf_source
   parameters:
@@ -1760,7 +1893,7 @@ blocks:
     bus_structure: null
     coordinate: [2064, 148.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: virtual_sink_1
   id: virtual_sink
   parameters:
@@ -1773,7 +1906,7 @@ blocks:
     bus_structure: null
     coordinate: [1240, 1004.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: virtual_source_0
   id: virtual_source
   parameters:
@@ -1786,7 +1919,7 @@ blocks:
     bus_structure: null
     coordinate: [8, 548.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: virtual_source_1
   id: virtual_source
   parameters:
@@ -1799,7 +1932,7 @@ blocks:
     bus_structure: null
     coordinate: [8, 1012.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: virtual_source_2
   id: virtual_source
   parameters:
@@ -1812,17 +1945,20 @@ blocks:
     bus_structure: null
     coordinate: [16, 1212.0]
     rotation: 0
-    state: true
+    state: enabled
 
 connections:
+- [blocks_add_xx_0, '0', qtgui_number_sink_0, '0']
 - [blocks_char_to_float_0, '0', qtgui_time_sink_x_0, '0']
 - [blocks_char_to_float_0_0, '0', qtgui_time_sink_x_0_0, '0']
 - [blocks_char_to_float_0_0_0, '0', blocks_delay_0, '0']
+- [blocks_char_to_float_1, '0', blocks_add_xx_0, '1']
 - [blocks_char_to_float_1_1, '0', fec_extended_tagged_decoder_2, '0']
 - [blocks_delay_0, '0', qtgui_time_sink_x_0_0, '1']
 - [blocks_file_source_0, '0', blocks_throttle2_0_0, '0']
 - [blocks_multiply_const_vxx_0, '0', soapy_bladerf_sink_0, '0']
 - [blocks_repack_bits_bb_0, '0', blocks_file_sink_0, '0']
+- [blocks_repack_bits_bb_0_0, '0', blocks_char_to_float_1, '0']
 - [blocks_repack_bits_bb_0_0, '0', fec_extended_tagged_encoder_0_1, '0']
 - [blocks_repack_bits_bb_0_0_0, '0', blocks_tagged_stream_mux_0, '1']
 - [blocks_repack_bits_bb_0_0_0, '0', digital_protocol_formatter_bb_0, '0']

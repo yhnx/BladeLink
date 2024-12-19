@@ -1,12 +1,14 @@
 # Function to remove both front and back preambles and sequence from file
+from os import name
+import time
+import subprocess
 def remove_preamble(file_path):
     global content
     
     detect_sequence = b'sts'
-    preamble = bytes([0b10101010]) * 3000
 
-    with open(file_path, 'rb') as file:
-        content = file.read()
+    #with open(file_path, 'rb') as file:
+        #content = file.read()
 
     start_index = content.find(detect_sequence)
     if start_index != -1:
@@ -16,25 +18,33 @@ def remove_preamble(file_path):
     if end_index != -1:
         content = content[:end_index]
 
-    preamble_length = len(preamble)
-    while True:
-        start_index = content.find(preamble)
-        if start_index == -1:
-            break
-        else:
-            content = content[start_index + preamble_length:]
+def tag():
+     global content
+     detected=False
+     typs=[b'mp3',b'jpeg',b'mp4']
+     
+     while(True):
+        with open('./rx.tmp', 'rb') as file:
 
-    while True:
-        end_index = content.rfind(preamble)
-        if end_index == -1:
-            break
-        else:
-            content = content[:end_index]
+            content = file.read()
+            if(len(content)>10):print('conncted')
+            time.sleep(1)
 
+            start= content.find(b'sts')
+            if start!= -1:
+                    print('file recieving')
+                    end_name= content.rfind(b'|||')
+                    name=content[start:end_name]
+                    print(name)
+                    end_index = content.rfind(b'end')
+                    if end_index != -1:
+                        start= content.find(b'|||')
+                        content = content[start:end_index]
+                        with open('./'+name.decode(),'wb') as output:
+                             output.write(content)
+                             with open('./rx.tmp','wb') as output:pass
+                        break
 
 
 # Remove both front and back preambles and sequence from the output.tmp file
-remove_preamble('./rx.tmp')
-with open('./out.'+input(), 'wb') as file:
-                file.write(content)
-
+tag()
