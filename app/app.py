@@ -268,11 +268,12 @@ class TransmittingApp(ctk.CTk):
             )
 
             # Capture output and errors
+            file_received = os.environ['RECEIVE_FILE']
             stdout, stderr = process.communicate()
 
             if process.returncode == 0:
                 # Successful reception
-                self.after(0, self.handle_receive_success, stdout.strip())
+                self.after(0, self.handle_receive_success, file_received.strip())
             else:
                 # Reception failed
                 self.after(0, self.handle_receive_error, stderr.strip())
@@ -304,6 +305,7 @@ class TransmittingApp(ctk.CTk):
                             if end_index != -1:
                                 start= content.find(b'|||')
                                 content = content[start+3:end_index]
+                                os.environ['RECEIVE_FILE']=name.decode()
                                 path='./'+name.decode()
                                 with open(path,'wb') as output:
                                     output.write(content)

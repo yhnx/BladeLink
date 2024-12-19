@@ -14,7 +14,7 @@ class TransmittingApp(ctk.CTk):
         # Try to set icon using PIL Image
         try:
             # Load the icon
-            icon_path = r"./transmitter/src/signal-tower.ico"  # Example location
+            icon_path = r"./signal-tower.ico"  # Example location
             try:
                 self.iconbitmap(icon_path)  # Use for .ico files
             except tk.TclError:
