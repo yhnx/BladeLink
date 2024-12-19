@@ -253,13 +253,38 @@ class TransmittingApp(ctk.CTk):
         threading.Thread(target=self.start_receive_process, daemon=True).start()
         with open('./rx.tmp','wb') as output:pass
         threading.Thread(target=self.file_decoder,daemon=True).start()
+
+    def open_receive_page(self):
+        """Transition to receive page"""
+        self.landing_frame.pack_forget()
+        self.receive_frame.pack(expand=True, fill="both")
         
+        # Reset receive status
+        self.receive_status_icon.configure(text="🔄", text_color="gray")
+        self.receive_status_text.configure(text="Receiving File...", text_color="gray")
+        self.received_file_label.configure(text="")
+        
+        # Create and show loading bar
+        self.progress_bar = ctk.CTkProgressBar(self.receive_status_frame, orientation="horizontal", width=400)
+        self.progress_bar.pack(pady=(20, 10))
+        self.progress_bar.set(0)  # Initialize progress to 0
+
+        # Start the receive process and update the loading bar in separate threads
+        threading.Thread(target=self.update_progress, daemon=True).start()
+        threading.Thread(target=self.start_receive_process, daemon=True).start()
+
+    def update_progress(self):
+        """Simulate loading progress"""
+        progress = 0
+        while progress < 1.0:
+            time.sleep(0.1)  # Simulate loading delay
+            progress += 0.02  # Increment progress
+            self.progress_bar.set(progress)
+
+
     def start_receive_process(self):
         """Run Telelink receiver script and handle results"""
-
-                            
         try:
-            #threading.Thread(target=rx(), daemon=True).start()
             # Run Telelink_receiver.py as a subprocess
             process = subprocess.Popen(
                 ['python3', self.path+'/receiver/Telelink_receiver.py'],
@@ -281,7 +306,8 @@ class TransmittingApp(ctk.CTk):
         except Exception as e:
             # Handle any unexpected errors
             self.after(0, self.handle_receive_error, str(e))
-    
+
+
     def file_decoder(self):
             global content
 
@@ -305,6 +331,7 @@ class TransmittingApp(ctk.CTk):
                             if end_index != -1:
                                 start= content.find(b'|||')
                                 content = content[start+3:end_index]
+                                os.environ['RECEIVE_FILE']=name.decode()
                                 path='./'+name.decode()
                                 with open(path,'wb') as output:
                                     output.write(content)
@@ -313,28 +340,24 @@ class TransmittingApp(ctk.CTk):
         
     def handle_receive_success(self, output):
         """Handle successful file reception"""
+        # Stop progress bar updates and show success
+        self.progress_bar.set(1.0)  # Complete the progress bar
+        self.progress_bar.pack_forget()  # Hide the progress bar
+        self.receive_status_icon.configure(text="✅", text_color="green")
+        self.receive_status_text.configure(text="File Received Successfully", text_color="green")
         # Try to extract the received file name
         try:
-            # Assuming the script prints the received file name
             received_file = output.split('\n')[-1].strip()
-            
-            # Update UI with success indicators
-            self.receive_status_icon.configure(text="✅", text_color="green")
-            self.receive_status_text.configure(text="File Received Successfully", text_color="green")
             self.received_file_label.configure(text=f"Received File: {received_file}")
-        
         except Exception as e:
-            # Fallback if parsing fails
-            self.receive_status_icon.configure(text="✅", text_color="green")
-            self.receive_status_text.configure(text="File Received Successfully", text_color="green")
             self.received_file_label.configure(text="File received (unable to retrieve filename)")
 
     def handle_receive_error(self, error):
         """Handle reception errors"""
-        # Update UI with error indicators
+        self.progress_bar.pack_forget()  # Hide the progress bar
         self.receive_status_icon.configure(text="❌", text_color="red")
-        self.receive_status_text.configure(text="Reception Failed", text_color="red")
-        self.received_file_label.configure(text="")
+        self.receive_status_text.configure(text="File Reception Failed", text_color="red")
+        self.received_file_label.configure(text=f"Error: {error}")
         
         # Optional: Show error message
         tk.messagebox.showerror("Receive Error", error)
