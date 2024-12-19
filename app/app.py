@@ -251,6 +251,7 @@ class TransmittingApp(ctk.CTk):
         
         # Start receive process in a thread
         threading.Thread(target=self.start_receive_process, daemon=True).start()
+        with open('./rx.tmp','wb') as output:pass
         threading.Thread(target=self.file_decoder,daemon=True).start()
         
     def start_receive_process(self):
