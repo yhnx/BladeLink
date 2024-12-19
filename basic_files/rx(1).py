@@ -1,23 +1,10 @@
 # Function to remove both front and back preambles and sequence from file
 import time
 import subprocess
-def remove_preamble(file_path):
-    global content
-    
-    detect_sequence = b'sts'
 
-    #with open(file_path, 'rb') as file:
-        #content = file.read()
 
-    start_index = content.find(detect_sequence)
-    if start_index != -1:
-        content = content[start_index + len(detect_sequence):]
 
-    end_index = content.rfind(detect_sequence)
-    if end_index != -1:
-        content = content[:end_index]
-
-def tag():
+def decode():
      global content
      detected=False
      typs=[b'mp3',b'jpeg',b'mp4']
@@ -53,5 +40,3 @@ def tag():
                     print("detected")
 
 
-# Remove both front and back preambles and sequence from the output.tmp file
-tag()

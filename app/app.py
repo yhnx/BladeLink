@@ -6,6 +6,7 @@ import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk  # Import Image and ImageTk
 from Crypto.Cipher import AES
+import time
 
 class TransmittingApp(ctk.CTk):
     def __init__(self):
@@ -250,15 +251,39 @@ class TransmittingApp(ctk.CTk):
 
     def start_receive_process(self):
         """Run Telelink receiver script and handle results"""
-        try:
-            # Run Telelink_receiver.py as a subprocess
-            process = subprocess.Popen(
-                ['python3', './receiver/Trx.py','rx.tmp'],
-                stdout1=subprocess.PIPE,
-                stderr1=subprocess.PIPE,
-                text=True
-            )
+        def open_file(file_path):
+                subprocess.run(["xdg-open", file_path])
 
+        def rx():
+            global content
+            
+            while(True):
+                with open('./rx.tmp', 'rb') as file:
+
+                    content = file.read()
+                    if(len(content)>10):print('conncted')
+                    time.sleep(1)
+
+                    start= content.find(b'sts')
+                    if start!= -1:
+                            print('file recieving')
+                            end_name= content.rfind(b'|||')
+                            name=content[start+3:end_name]
+                            print(name)
+                            end_index = content.rfind(b'end')
+                            if end_index != -1:
+                                start= content.find(b'|||')
+                                content = content[start+3:end_index]
+                                path='./'+name.decode()
+                                with open(path,'wb') as output:
+                                    output.write(content)
+                                    with open('./rx.tmp','wb') as output:pass
+                                open_file(path)
+                                break
+       
+       
+        try:
+            threading.Thread(target=rx(), daemon=True).start()
             # Run Telelink_receiver.py as a subprocess
             process = subprocess.Popen(
                 ['python3', './receiver/Telelink_receiver.py'],
