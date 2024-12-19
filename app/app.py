@@ -238,6 +238,7 @@ class TransmittingApp(ctk.CTk):
             text_color="white"
         )
         back_button.pack(side="bottom", pady=20)
+     
 
     def open_receive_page(self):
         """Transition to receive page"""
@@ -245,23 +246,8 @@ class TransmittingApp(ctk.CTk):
         self.receive_frame.pack(expand=True, fill="both")
         
         # Reset receive status
-        self.receive_status_icon.configure(text="🔄", text_color="gray")
-        self.receive_status_text.configure(text="Waiting to Receive", text_color="gray")
-        self.received_file_label.configure(text="")
-        
-        # Start receive process in a thread
-        threading.Thread(target=self.start_receive_process, daemon=True).start()
-        with open('./rx.tmp','wb') as output:pass
-        threading.Thread(target=self.file_decoder,daemon=True).start()
-
-    def open_receive_page(self):
-        """Transition to receive page"""
-        self.landing_frame.pack_forget()
-        self.receive_frame.pack(expand=True, fill="both")
-        
-        # Reset receive status
-        self.receive_status_icon.configure(text="🔄", text_color="gray")
-        self.receive_status_text.configure(text="Receiving File...", text_color="gray")
+        self.receive_status_icon.configure(text="🫘", text_color="gray")
+        self.receive_status_text.configure(text="Initializing....", text_color="gray")
         self.received_file_label.configure(text="")
         
         # Create and show loading bar
@@ -272,14 +258,17 @@ class TransmittingApp(ctk.CTk):
         # Start the receive process and update the loading bar in separate threads
         threading.Thread(target=self.update_progress, daemon=True).start()
         threading.Thread(target=self.start_receive_process, daemon=True).start()
-
+        with open('./rx.tmp','wb') as output:pass
+        threading.Thread(target=self.file_decoder,daemon=True).start()
     def update_progress(self):
         """Simulate loading progress"""
         progress = 0
         while progress < 1.0:
             time.sleep(0.1)  # Simulate loading delay
-            progress += 0.02  # Increment progress
+            progress += 0.015  # Increment progress
             self.progress_bar.set(progress)
+        self.receive_status_icon.configure(text="🌱", text_color="gray")
+        self.receive_status_text.configure(text="Ready to recieve", text_color="gray")
 
 
     def start_receive_process(self):
@@ -343,15 +332,10 @@ class TransmittingApp(ctk.CTk):
         # Stop progress bar updates and show success
         self.progress_bar.set(1.0)  # Complete the progress bar
         self.progress_bar.pack_forget()  # Hide the progress bar
-        self.receive_status_icon.configure(text="✅", text_color="green")
-        self.receive_status_text.configure(text="File Received Successfully", text_color="green")
+        self.receive_status_icon.configure(text="🌳", text_color="green")
+        self.receive_status_text.configure(text="File(s) Received Successfully", text_color="green")
         # Try to extract the received file name
-        try:
-            received_file = output.split('\n')[-1].strip()
-            self.received_file_label.configure(text=f"Received File: {received_file}")
-        except Exception as e:
-            self.received_file_label.configure(text="File received (unable to retrieve filename)")
-
+        
     def handle_receive_error(self, error):
         """Handle reception errors"""
         self.progress_bar.pack_forget()  # Hide the progress bar
@@ -454,7 +438,7 @@ class TransmittingApp(ctk.CTk):
                     file_path = self.selected_file_path
                     with open(file_path, 'rb') as file:
                         plaintext = file.read()
-                    preamble = binarypreamble * 30
+                    preamble = binarypreamble * 3000
                     detect_sequence = b'sts'  # Sequence to detect preamble
                     
                     with open(tmp_file, 'wb') as output:
@@ -487,7 +471,7 @@ class TransmittingApp(ctk.CTk):
 
                 # Start Telelink.py as a subprocess
                 process = subprocess.Popen(
-                    ['python3', self.path+'./transmitter/Telelink_transmitter.py'],
+                    ['python3', self.path+'/transmitter/Telelink_transmitter.py'],
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                     text=True

@@ -194,7 +194,7 @@ class Telelink(gr.top_block, Qt.QWidget):
 
         self.soapy_bladerf_source_0 = soapy.source(dev, "fc32", 1, '',
                                   stream_args, tune_args, settings)
-        self.soapy_bladerf_source_0.set_sample_rate(0, samp_rate_blade)
+        self.soapy_bladerf_source_0.set_sample_rate(0, samp_rate_blade*2)
         self.soapy_bladerf_source_0.set_bandwidth(0, rxbw)
         self.soapy_bladerf_source_0.set_frequency(0, freq)
         self.soapy_bladerf_source_0.set_frequency_correction(0, 0)
@@ -207,7 +207,7 @@ class Telelink(gr.top_block, Qt.QWidget):
 
         self.soapy_bladerf_sink_0 = soapy.sink(dev, "fc32", 1, '',
                                   stream_args, tune_args, settings)
-        self.soapy_bladerf_sink_0.set_sample_rate(0, samp_rate_blade)
+        self.soapy_bladerf_sink_0.set_sample_rate(0, samp_rate_blade*2)
         self.soapy_bladerf_sink_0.set_bandwidth(0, 10000)
         self.soapy_bladerf_sink_0.set_frequency(0, freq)
         self.soapy_bladerf_sink_0.set_frequency_correction(0, 0)
@@ -718,8 +718,8 @@ class Telelink(gr.top_block, Qt.QWidget):
 
     def set_samp_rate_blade(self, samp_rate_blade):
         self.samp_rate_blade = samp_rate_blade
-        self.soapy_bladerf_sink_0.set_sample_rate(0, self.samp_rate_blade)
-        self.soapy_bladerf_source_0.set_sample_rate(0, self.samp_rate_blade)
+        self.soapy_bladerf_sink_0.set_sample_rate(0, self.samp_rate_blade*2)
+        self.soapy_bladerf_source_0.set_sample_rate(0, self.samp_rate_blade*2)
 
     def get_samp_rate(self):
         return self.samp_rate
