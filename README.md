@@ -74,9 +74,6 @@ Ensure you have the following installed:
 4. Push to the branch (`git push origin feature-name`)
 5. Create a pull request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
 
