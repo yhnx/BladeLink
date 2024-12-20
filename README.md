@@ -62,7 +62,7 @@ Ensure you have the following installed:
 
 ## TeleLink Communications
 
-![Telelink Logo](https://github.com/yhnx/BladeLink/blob/main/app/transmitter/src/telelink.png)
+![Telelink Logo](https://github.com/yhnx/BladeLink/blob/main/app/transmitter/src/telelink_logo.png)
 
 *Creators of BladeLink, driving innovation in secure data communication.*
 
