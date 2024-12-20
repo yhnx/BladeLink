@@ -23,46 +23,46 @@ Ensure you have the following installed:
 
 ### Steps
 
-1. Clone the repository:
+1. Install GNU Radio: Follow the official GNU Radio installation guide for your platform.
+   
+2. Clone the repository:
    ```bash
    git clone https://github.com/yhnx/BladeLink.git
-   cd a
-   ```
+   ``` 
 
-2. Install GNU Radio: Follow the official GNU Radio installation guide for your platform.
-
-3. Install project dependencies:
+4. Install project dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
 ## Usage
 
-### Transmitter Application
+### Running BladeLink Application
 
-1. Run the transmitter application:
+1. Move to the required directory:
+   ```bash
+   cd app
+   ``` 
+
+2.   Run the transmitter application:
    ```bash
    python app.py
    ```
 
-2. Follow the on-screen instructions to select and send files.
+3. Follow the on-screen instructions to select and send files.
 
-### Receiver Application
 
-1. The receiver starts automatically and listens for incoming files. Ensure the `rx.py` script is running:
-   ```bash
-   python rx.py
-   ```
-
-2. Received files will be saved in the current directory.
 
 ## Project Structure
 
-- `app.py`: Main GUI application for transmission
-- `rx.py`: Backend script for file reception
+- `app.py`: Main GUI application for transmission and reception
+- `Telelink_reciever.py`: Backend script for file reception (made using GNU Radio)
+-  `Telelink_transmitter.py`: Backend script for file transmission (made using GNU Radio)
 - `requirements.txt`: Lists Python dependencies for the project
 
-## Team TeleLink
+## TeleLink Communications
+
+![Telelink Logo](https://github.com/yhnx/BladeLink/blob/main/app/transmitter/src/telelink.png)
 
 *Creators of BladeLink, driving innovation in secure data communication.*
 
