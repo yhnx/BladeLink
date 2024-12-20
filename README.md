@@ -1,8 +1,8 @@
 # BladeLink
 
-![BladeLink Logo](https://github.com/yhnx/BladeLink/blob/main/app/transmitter/src/bladeLINK.png)
+![BladeLink Logo](https://github.com/yhnx/BladeLink/blob/main/app/transmitter/src/bladeLINK%20(1).png)
 
-*A robust file transmission and reception platform by Team TeleLink.*
+*A robust file transmission and reception platform utilizing Blade RFs by Team TeleLink.*
 
 ## Features
 
