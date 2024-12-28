@@ -97,7 +97,7 @@ class TransmittingApp(ctk.CTk):
 
         host_button = ctk.CTkButton(
             self.livestream_frame, 
-            text="Host", 
+            text="Host 📡", 
             font=("Roboto", 20),
             command=self.start_host,
             #fg_color="#85C1E9",  # Light blue
@@ -111,11 +111,11 @@ class TransmittingApp(ctk.CTk):
 
         client_button = ctk.CTkButton(
             self.livestream_frame, 
-            text="Client", 
+            text="Client 📺", 
             font=("Roboto", 20),
             command=self.start_client,
-            fg_color="#2E86C1",  # Dark blue
-            hover_color="#1F618D",
+            fg_color="#1F618D",  # Dark blue
+            hover_color="#5DADE2",
             text_color="white",
             width=200,
             height=70
