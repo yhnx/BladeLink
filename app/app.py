@@ -45,7 +45,7 @@ class TransmittingApp(ctk.CTk):
                 image=title_photo, 
                 text=""
             )
-            title_label.pack(pady=(120, 0))
+            title_label.pack(pady=(70, 0))
         except Exception as e:
             print(f"Error loading title image: {e}")
 
@@ -76,7 +76,64 @@ class TransmittingApp(ctk.CTk):
             width=200,
             height=50  
         )
-        recieve_button.pack(pady=(20,0))
+        recieve_button.pack(pady=(20,20))
+
+             # LiveStreaming (Beta) Button
+        livestream_button = ctk.CTkButton(
+            self.landing_frame, 
+            text="Live Streaming (Beta)", 
+            font=("Roboto", 18),
+            command=self.open_livestream_page,
+            fg_color="#F39C12",  # Orange
+            hover_color="#E67E22",  # Carrot
+            text_color="white",
+            width=200,
+            height=50
+        )
+        livestream_button.pack(pady=(20, 0))
+
+        # LiveStreaming Page
+        self.livestream_frame = ctk.CTkFrame(self, fg_color="white")
+
+        host_button = ctk.CTkButton(
+            self.livestream_frame, 
+            text="Host", 
+            font=("Roboto", 20),
+            command=self.start_host,
+            fg_color="#85C1E9",  # Light blue
+            hover_color="#5DADE2",
+            text_color="white",
+            width=200,
+            height=70
+        )
+        host_button.pack(pady=(140, 20), anchor="center")
+
+        client_button = ctk.CTkButton(
+            self.livestream_frame, 
+            text="Client", 
+            font=("Roboto", 20),
+            command=self.start_client,
+            fg_color="#2E86C1",  # Dark blue
+            hover_color="#1F618D",
+            text_color="white",
+            width=200,
+            height=70
+        )
+        client_button.pack(pady=(20, 20), anchor="center")
+
+        back_button = ctk.CTkButton(
+            self.livestream_frame, 
+            text="Back", 
+            font=("Roboto", 15),
+            command=self.show_slanding_page,
+            fg_color="#FF6F61",  # Coral
+            hover_color="#FF4F4F",  # Light Red
+            text_color="white",
+            width=150,  # Adjust the width as needed
+            height=40
+        )
+        back_button.pack(pady=(20, 20), anchor="center")
+
 
         # Logo Frame (bottom right)
         logo_frame = ctk.CTkFrame(self.landing_frame, fg_color="white")
@@ -238,7 +295,81 @@ class TransmittingApp(ctk.CTk):
             text_color="white"
         )
         back_button.pack(side="bottom", pady=20)
-     
+    
+    def show_slanding_page(self):
+        """Return to landing page"""
+        # Hide the current frame
+        if self.livestream_frame.winfo_ismapped():
+            self.livestream_frame.pack_forget()
+
+        # Show landing page
+        self.landing_frame.pack(expand=True, fill="both")
+
+    def open_livestream_page(self):
+        """Transition to the LiveStreaming page"""
+        self.landing_frame.pack_forget()
+        self.livestream_frame.pack(expand=True, fill="both")
+
+    def start_host(self):
+        """Transition to receive page"""
+        self.livestream_frame.pack_forget()
+        self.livestream_frame.pack(expand=True, fill="both")
+        
+        # Reset receive status
+        self.receive_status_icon.configure(text="🫘", text_color="gray")
+        self.receive_status_text.configure(text="Initializing....", text_color="gray")
+        self.received_file_label.configure(text="")
+        
+        # Create and show loading bar
+        self.progress_bar = ctk.CTkProgressBar(self.receive_status_frame, orientation="horizontal", width=400)
+        self.progress_bar.pack(pady=(20, 10))
+        self.progress_bar.set(0)  # Initialize progress to 0
+
+        # Start the receive process and update the loading bar in separate threads
+        threading.Thread(target=self.update_progress, daemon=True).start()
+        threading.Thread(target=self.start_host_process, daemon=True).start()
+
+    def update_progress(self):
+        """Simulate loading progress"""
+        progress = 0
+        while progress < 1.0:
+            time.sleep(0.1)  # Simulate loading delay
+            progress += 0.015  # Increment progress
+            self.progress_bar.set(progress)
+        self.receive_status_icon.configure(text="🌱", text_color="gray")
+        self.receive_status_text.configure(text="Ready to Live Stream", text_color="gray")
+
+    def start_host_process(self):
+        """Run Telelink receiver script and handle results"""
+        try:
+            # Run Telelink_receiver.py as a subprocess
+            process = subprocess.Popen(
+                ['python3', self.path+'/receiver/Telelink_receiver.py'],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            )
+
+            # Capture output and errors
+            stdout, stderr = process.communicate()
+
+            if process.returncode == 0:
+                # Successful reception
+                self.after(0, self.handle_receive_success, stdout.strip())
+            else:
+                # Reception failed
+                self.after(0, self.handle_receive_error, stderr.strip())
+
+        except Exception as e:
+            # Handle any unexpected errors
+            self.after(0, self.handle_receive_error, str(e))
+
+    def start_client(self):
+        """Placeholder for starting client functionality"""
+        tk.messagebox.showinfo("Client", "Starting Client Mode...")
+    
+
+
 
     def open_receive_page(self):
         """Transition to receive page"""
