@@ -28,7 +28,7 @@ class TransmittingApp(ctk.CTk):
 
         # Configure window
         self.title("TeleLink Communications")
-        self.geometry("800x600")
+        self.geometry("1000x720")
         self.configure(fg_color="#FFFFFF")
 
         # Create frame for landing page
@@ -320,7 +320,7 @@ class TransmittingApp(ctk.CTk):
         try:
             # Run Telelink_receiver.py as a subprocess
             process = subprocess.Popen(
-                ['python3', self.path+'/receiver/Telelink_receiver.py'],
+                ['python3', self.path+r'/stream/Telelink_host.py'],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True
@@ -328,6 +328,8 @@ class TransmittingApp(ctk.CTk):
 
             # Capture output and errors
             stdout, stderr = process.communicate()
+            print(stdout)
+            print(stderr)
 
 
         except Exception as e:
@@ -345,7 +347,7 @@ class TransmittingApp(ctk.CTk):
         try:
             # Run Telelink_receiver.py as a subprocess
             process = subprocess.Popen(
-                ['python3', self.path+'/receiver/Telelink_receiver.py'],
+                ['python3', self.path+'/stream/Telelink_client.py'],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True
@@ -353,6 +355,8 @@ class TransmittingApp(ctk.CTk):
 
             # Capture output and errors
             stdout, stderr = process.communicate()
+            print(stdout)
+            print(stderr)
         except Exception as e:
             # Handle any unexpected errors
             print(e)
