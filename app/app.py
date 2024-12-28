@@ -311,33 +311,9 @@ class TransmittingApp(ctk.CTk):
         self.livestream_frame.pack(expand=True, fill="both")
 
     def start_host(self):
-        """Transition to receive page"""
-        self.livestream_frame.pack_forget()
-        self.livestream_frame.pack(expand=True, fill="both")
-        
-        # Reset receive status
-        self.receive_status_icon.configure(text="🫘", text_color="gray")
-        self.receive_status_text.configure(text="Initializing....", text_color="gray")
-        self.received_file_label.configure(text="")
-        
-        # Create and show loading bar
-        self.progress_bar = ctk.CTkProgressBar(self.receive_status_frame, orientation="horizontal", width=400)
-        self.progress_bar.pack(pady=(20, 10))
-        self.progress_bar.set(0)  # Initialize progress to 0
-
-        # Start the receive process and update the loading bar in separate threads
-        threading.Thread(target=self.update_progress, daemon=True).start()
+        """Placeholder for starting host functionality"""
+        print("Starting host process...")
         threading.Thread(target=self.start_host_process, daemon=True).start()
-
-    def update_progress(self):
-        """Simulate loading progress"""
-        progress = 0
-        while progress < 1.0:
-            time.sleep(0.1)  # Simulate loading delay
-            progress += 0.015  # Increment progress
-            self.progress_bar.set(progress)
-        self.receive_status_icon.configure(text="🌱", text_color="gray")
-        self.receive_status_text.configure(text="Ready to Live Stream", text_color="gray")
 
     def start_host_process(self):
         """Run Telelink receiver script and handle results"""
@@ -353,21 +329,35 @@ class TransmittingApp(ctk.CTk):
             # Capture output and errors
             stdout, stderr = process.communicate()
 
-            if process.returncode == 0:
-                # Successful reception
-                self.after(0, self.handle_receive_success, stdout.strip())
-            else:
-                # Reception failed
-                self.after(0, self.handle_receive_error, stderr.strip())
 
         except Exception as e:
             # Handle any unexpected errors
-            self.after(0, self.handle_receive_error, str(e))
+            print(e)
+            pass
 
     def start_client(self):
         """Placeholder for starting client functionality"""
-        tk.messagebox.showinfo("Client", "Starting Client Mode...")
-    
+        print("Starting client process...")
+        threading.Thread(target=self.start_client_process, daemon=True).start()
+
+    def start_client_process(self):
+        """Run Telelink receiver script and handle results"""
+        try:
+            # Run Telelink_receiver.py as a subprocess
+            process = subprocess.Popen(
+                ['python3', self.path+'/receiver/Telelink_receiver.py'],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            )
+
+            # Capture output and errors
+            stdout, stderr = process.communicate()
+        except Exception as e:
+            # Handle any unexpected errors
+            print(e)
+            pass
+
 
 
 
