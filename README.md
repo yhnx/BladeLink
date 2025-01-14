@@ -10,6 +10,15 @@
 - **User Interface**: Built with `customtkinter` for an interactive and user-friendly experience
 - **Encryption Support**: Ensures secure data sharing
 - **Real-Time Progress**: Displays live progress during transmission and reception
+- **Video Stream Functionality**: Stream video content over the network
+
+### Future Updates
+
+- **Synchronized Audio Streaming**: Planned integration for a complete multimedia experience.
+
+## Requirements
+
+This application requires two nodes (computers) and two BladeRF devices to function effectively.
 
 ## Installation
 
@@ -28,9 +37,9 @@ Ensure you have the following installed:
 2. Clone the repository:
    ```bash
    git clone https://github.com/yhnx/BladeLink.git
-   ``` 
+   ```
 
-4. Install project dependencies:
+3. Install project dependencies:
    ```bash
    pip install -r requirements.txt
    ```
@@ -42,37 +51,34 @@ Ensure you have the following installed:
 1. Move to the required directory:
    ```bash
    cd app
-   ``` 
+   ```
 
-2.   Run the transmitter application:
+2. Run the transmitter application:
    ```bash
    python app.py
    ```
 
 3. Follow the on-screen instructions to select and send files.
 
-
-
 ## Project Structure
 
-- `app.py`: Main GUI application for transmission and reception
-- `Telelink_reciever.py`: Backend script for file reception (made using GNU Radio)
--  `Telelink_transmitter.py`: Backend script for file transmission (made using GNU Radio)
-- `requirements.txt`: Lists Python dependencies for the project
+* `app.py`: Main GUI application for transmission and reception
+* `Telelink_receiver.py`: Backend script for file reception (made using GNU Radio)
+* `Telelink_transmitter.py`: Backend script for file transmission (made using GNU Radio)
+* `requirements.txt`: Lists Python dependencies for the project
 
-## TeleLink Communications
+
+
+## Team TeleLink
+
+* Praveen Wijesinghe ([@praveen2k2](https://github.com/praveen2k2))
+* Yehen Asuramuni ([@yhnx](https://github.com/yhnx))
+* Bathiya Dissanayake([@bathiy](https://github.com/bathiy))
+* Ransadi De Alwis ([@RansadiDeAlwis](https://github.com/RansadiDeAlwis))
 
 ![Telelink Logo](https://github.com/yhnx/BladeLink/blob/main/app/transmitter/src/telelink_logo.png)
 
-*Creators of BladeLink, driving innovation in secure data communication.*
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature-name`)
-3. Commit your changes (`git commit -m 'Add some feature'`)
-4. Push to the branch (`git push origin feature-name`)
-5. Create a pull request
 
 
 ## Acknowledgments
