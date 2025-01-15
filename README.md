@@ -16,6 +16,11 @@
 
 - **Synchronized Audio Streaming**: Planned integration for a complete multimedia experience.
 
+### Measured Metrics
+- Up to **46 ft** for error-free communication between the two nodes during **data transfer**.
+- Up to **8 ft** for seamless and uninterrupted **video streaming** capability.
+
+
 ## Requirements
 
 This application requires two nodes (computers) and two BladeRF devices to function effectively.
